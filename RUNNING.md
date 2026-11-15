@@ -13,12 +13,12 @@ Each one is a single `.exe` file. There is nothing to install, and you don't nee
 
 ## 1. Pick the right download
 
-The ready-made programs are on this repository's **Releases** page. There are two zip files. Choose the one that matches your PC's processor:
+The ready-made programs are on this repository's **Releases** page. Each build comes as two zip files, named `HPSP-Demo-<version>-build<n>-<kind of PC>.zip`, for example `HPSP-Demo-0.5.0-build2-win-arm64.zip`. A higher build number is newer. Choose the zip that matches your PC's processor:
 
 | Your PC | Download |
 |---|---|
-| Ordinary Intel or AMD PC (most PCs) | `HPSP-Demo-win-x64.zip` |
-| Arm PC: Windows on a Mac with Apple silicon (Parallels, VMware Fusion), Surface Pro X / Pro 11, Snapdragon laptops | `HPSP-Demo-win-arm64.zip` |
+| Ordinary Intel or AMD PC (most PCs) | the `…-win-x64.zip` |
+| Arm PC: Windows on a Mac with Apple silicon (Parallels, VMware Fusion), Surface Pro X / Pro 11, Snapdragon laptops | the `…-win-arm64.zip` |
 
 To check, open **Settings → System → About** and look at *System type*. "x64-based processor" means the x64 download, and "ARM-based processor" means the Arm64 download. (The x64 version also runs on Arm PCs, more slowly, under emulation. The status bar then says "x64 emulated".)
 
@@ -99,4 +99,4 @@ dotnet run --project src\HpspReaderSimulator
 dotnet run --project tests\Hpsp.Core.Tests      # the automated tests
 ```
 
-To make the single-file `.exe` files, use `demo\build\publish.ps1` (Windows) or `demo/build/publish.sh` (Linux/macOS).
+To make the single-file `.exe` files and the zips, use `demo\build\publish.ps1 -Build <n>` (Windows) or `demo/build/publish.sh <n>` (Linux/macOS), where `<n>` is the build number.
