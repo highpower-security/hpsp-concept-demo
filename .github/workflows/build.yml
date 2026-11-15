@@ -1,0 +1,50 @@
+# Build and test on Windows for every push and pull request. Tagged versions
+# (v*) also produce the two release zips as workflow artifacts.
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+jobs:
+  demo:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: demo
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build
+        run: dotnet build HpspDemo.sln -c Release
+      - name: Test (protocol core, both TLS engines, end to end)
+        run: dotnet run --project tests/Hpsp.Core.Tests -c Release --no-build
+      - name: Make the release zips
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        run: ./build/publish.ps1
+      - uses: actions/upload-artifact@v4
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          name: hpsp-demo-windows
+          path: demo/artifacts/*.zip
+
+  c-reference:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: c-reference
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install cbor2 cryptography ecdsa
+      - name: Unit tests (AddressSanitizer + UBSan)
+        run: make test
+      - name: Controller simulator scenarios
+        run: make device && make sim

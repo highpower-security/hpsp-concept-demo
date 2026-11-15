@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Shared Windows Forms pieces used by both simulators: the activity window,
+       the secrets banner, the provisioning checklist and the TLS engine picker. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <!-- Windows Forms. On Windows the SDK's own switch is used. Elsewhere (for example the Linux
+       machine that builds the release files) the Windows Forms reference pack comes from NuGet. -->
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(OS)' != 'Windows_NT'">
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
+    <Using Include="System.Drawing" />
+    <Using Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hpsp.Core\Hpsp.Core.csproj" />
+  </ItemGroup>
+</Project>

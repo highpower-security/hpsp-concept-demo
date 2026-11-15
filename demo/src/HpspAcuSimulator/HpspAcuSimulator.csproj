@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- HPSP ACU Simulator: a Windows Forms program. Build on Windows with
+         dotnet run (project folder src/HpspAcuSimulator)
+       or see RUNNING.md for the ready-made .exe files. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>HpspAcuSimulator</AssemblyName>
+    <RootNamespace>HpspAcuSimulator</RootNamespace>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Product>HPSP ACU Simulator</Product>
+    <Company>Highpower Security Products LLC</Company>
+    <Copyright>Copyright (c) 2026 Highpower Security Products LLC. Apache-2.0.</Copyright>
+    <Version>0.5.0</Version>
+    <InformationalVersion>0.5.0-demo</InformationalVersion>
+    <!-- The release .exe files are made with (see build/publish.sh):
+           dotnet publish -c Release -r win-x64  (or win-arm64) self-contained, single file
+         so no .NET installation is needed on the PC that runs them. -->
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <!-- Windows Forms. On Windows the SDK's own switch is used. Elsewhere (for example the Linux
+       machine that builds the release files) the Windows Forms reference pack comes from NuGet. -->
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(OS)' != 'Windows_NT'">
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
+    <Using Include="System.Drawing" />
+    <Using Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hpsp.Core\Hpsp.Core.csproj" />
+    <ProjectReference Include="..\Hpsp.Demo.Ui\Hpsp.Demo.Ui.csproj" />
+  </ItemGroup>
+</Project>

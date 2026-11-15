@@ -1,0 +1,23 @@
+# .NET build output
+bin/
+obj/
+demo/artifacts/
+*.user
+.vs/
+*.swp
+
+# C reference build output
+c-reference/build_*
+c-reference/hpsp_device
+c-reference/device_log.txt
+*.o
+
+# Never commit demo keys or a simulator's data folder
+ui-settings.json
+acu-site.json
+access-list.json
+reader-state.json
+
+# OS clutter
+.DS_Store
+Thumbs.db
