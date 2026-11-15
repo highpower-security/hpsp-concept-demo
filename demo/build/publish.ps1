@@ -6,15 +6,15 @@
 param([Parameter(Mandatory = $true)][int]$Build)
 $ErrorActionPreference = 'Stop'
 Set-Location (Join-Path $PSScriptRoot '..')
-$version = ([xml](Get-Content src\HpspAcuSimulator\HpspAcuSimulator.csproj)).Project.PropertyGroup.Version | Where-Object { $_ } | Select-Object -First 1
+$version = ([xml](Get-Content AcuSimulator\HpspAcuSimulator\HpspAcuSimulator.csproj)).Project.PropertyGroup.Version | Where-Object { $_ } | Select-Object -First 1
 $name = "HPSP-Demo-$version-build$Build"
 $out = Join-Path (Get-Location) 'artifacts'
 New-Item -ItemType Directory -Force $out | Out-Null
 foreach ($rid in 'win-x64', 'win-arm64') {
     $dir = Join-Path $out "$name-$rid"
     New-Item -ItemType Directory -Force $dir | Out-Null
-    foreach ($app in 'HpspAcuSimulator', 'HpspReaderSimulator') {
-        dotnet publish "src/$app" -c Release -r $rid --self-contained true -p:PublishSingleFile=true -o $dir
+    foreach ($app in 'AcuSimulator/HpspAcuSimulator', 'ReaderSimulator/HpspReaderSimulator') {
+        dotnet publish $app -c Release -r $rid --self-contained true -p:PublishSingleFile=true -o $dir
         if ($LASTEXITCODE -ne 0) { throw "publish failed: $app $rid" }
     }
     Get-ChildItem $dir -Filter *.pdb | Remove-Item

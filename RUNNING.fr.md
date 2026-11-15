@@ -92,11 +92,14 @@ Options de ligne de commande facultatives : `--data <dossier>` pour les deux pro
 
 Il faut le [SDK .NET 8](https://dotnet.microsoft.com/download/dotnet/8.0) sous Windows. Ensuite :
 
+Chaque programme a son propre dossier source, qui se compile seul :
+
 ```
-cd demo
-dotnet run --project src\HpspAcuSimulator
-dotnet run --project src\HpspReaderSimulator
-dotnet run --project tests\Hpsp.Core.Tests      # les tests automatiques
+cd demo\AcuSimulator
+dotnet run --project HpspAcuSimulator
+cd ..\ReaderSimulator
+dotnet run --project HpspReaderSimulator
+dotnet run --project Tests\Hpsp.Core.Tests      # les tests automatiques
 ```
 
 Pour produire les fichiers `.exe` autonomes et les zips, utilisez `demo\build\publish.ps1 -Build <n>` (Windows) ou `demo/build/publish.sh <n>` (Linux/macOS), où `<n>` est le numéro de build.

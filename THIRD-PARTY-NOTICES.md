@@ -6,7 +6,7 @@ The demo and the C reference use the following components. Each keeps its own li
 
 | Component | Version | Used for | Licence |
 |---|---|---|---|
-| [BouncyCastle.Cryptography](https://www.bouncycastle.org/csharp/) | 2.7.0 | TLS 1.3 with a pre-shared key (pairing), the optional BouncyCastle TLS engine for sessions, and elliptic-curve arithmetic for SPAKE2+. All BouncyCastle code is in `demo/src/Hpsp.Core/BouncyCastle/`, between `BOUNCYCASTLE CODE - START` and `END` banners. | MIT |
+| [BouncyCastle.Cryptography](https://www.bouncycastle.org/csharp/) | 2.7.0 | TLS 1.3 with a pre-shared key (pairing), the optional BouncyCastle TLS engine for sessions, and elliptic-curve arithmetic for SPAKE2+. All BouncyCastle code is in the `Hpsp.Core/BouncyCastle/` folder of each program (`demo/AcuSimulator/` and `demo/ReaderSimulator/`), between `BOUNCYCASTLE CODE - START` and `END` banners. | MIT |
 | [QRCoder](https://github.com/codebude/QRCoder) | 1.6.0 | Drawing the reader's setup QR code (Reader Simulator only) | MIT |
 | [System.Formats.Cbor](https://www.nuget.org/packages/System.Formats.Cbor) | 9.0.24 | CBOR encoding and decoding | MIT (.NET Foundation) |
 | .NET 8 runtime and Windows Forms | 8.0 | Included in the self-contained `.exe` files | MIT (.NET Foundation) |

@@ -243,13 +243,14 @@ public static class LocalizationTests
     public static void Run(Action<bool, string> check)
     {
         Console.WriteLine("== Localization: French covers all engine text ==");
-        var src = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..", "src");
+        var src = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", ".."));   // this app's folder
         // L.T("...") / L.F("...") calls, and checklist steps (Title = "...", Explain = "..."), which are translated when shown.
         var rx = new System.Text.RegularExpressions.Regex(@"(?:L\.[TF]\(|\b(?:Title|Explain) = )""((?:[^""\\]|\\.)*)""");
         var keys = new HashSet<string>();
         foreach (var f in Directory.GetFiles(src, "*.cs", SearchOption.AllDirectories))
         {
-            if (f.Contains("Localization")) continue;
+            var rel = Path.GetRelativePath(src, f).Replace('\\', '/');
+            if (rel.Contains("Localization/") || rel.StartsWith("Tests/") || rel.Contains("/bin/") || rel.Contains("/obj/")) continue;
             foreach (System.Text.RegularExpressions.Match m in rx.Matches(File.ReadAllText(f)))
                 keys.Add(System.Text.RegularExpressions.Regex.Unescape(m.Groups[1].Value));
         }

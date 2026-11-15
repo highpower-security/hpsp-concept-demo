@@ -92,11 +92,14 @@ Optional command-line switches: `--data <folder>` for both programs, and `--pair
 
 You need the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) on Windows. Then:
 
+Each program has its own source folder, which builds on its own:
+
 ```
-cd demo
-dotnet run --project src\HpspAcuSimulator
-dotnet run --project src\HpspReaderSimulator
-dotnet run --project tests\Hpsp.Core.Tests      # the automated tests
+cd demo\AcuSimulator
+dotnet run --project HpspAcuSimulator
+cd ..\ReaderSimulator
+dotnet run --project HpspReaderSimulator
+dotnet run --project Tests\Hpsp.Core.Tests      # the automated tests
 ```
 
 To make the single-file `.exe` files and the zips, use `demo\build\publish.ps1 -Build <n>` (Windows) or `demo/build/publish.sh <n>` (Linux/macOS), where `<n>` is the build number.

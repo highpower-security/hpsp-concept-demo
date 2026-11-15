@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <!-- HPSP Reader Simulator: a Windows Forms program. Build on Windows with
-         dotnet run (project folder src/HpspReaderSimulator)
+         dotnet run (project folder demo/ReaderSimulator/HpspReaderSimulator)
        or see RUNNING.md for the ready-made .exe files. -->
   <PropertyGroup>
     <OutputType>WinExe</OutputType>

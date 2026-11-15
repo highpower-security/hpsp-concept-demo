@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <!-- HPSP ACU Simulator: a Windows Forms program. Build on Windows with
-         dotnet run (project folder src/HpspAcuSimulator)
+         dotnet run (project folder demo/AcuSimulator/HpspAcuSimulator)
        or see RUNNING.md for the ready-made .exe files. -->
   <PropertyGroup>
     <OutputType>WinExe</OutputType>

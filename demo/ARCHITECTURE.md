@@ -1,19 +1,25 @@
 # How the demo is built
 
-The demo is a .NET 8 solution, `HpspDemo.sln`, with four projects:
+The demo is two .NET 8 programs. Each has its own folder containing **everything needed to build it**:
 
 ```
 demo/
-├── src/
-│   ├── Hpsp.Core/              the protocol: no user interface, runs on any OS
-│   ├── Hpsp.Demo.Ui/           shared Windows Forms pieces (activity window, checklist…)
-│   ├── HpspAcuSimulator/       the ACU program     → HpspAcuSimulator.exe
-│   └── HpspReaderSimulator/    the reader program  → HpspReaderSimulator.exe
-├── tests/Hpsp.Core.Tests/      headless tests (dotnet run): spec examples, vectors, end to end
-└── build/                      scripts that make the single-file .exe files
+├── AcuSimulator/                    → HpspAcuSimulator.exe
+│   ├── AcuSimulator.sln
+│   ├── HpspAcuSimulator/            the ACU's window
+│   ├── Hpsp.Core/                   the protocol: no user interface, runs on any OS   ┐ identical in
+│   ├── Hpsp.Demo.Ui/                shared window pieces (activity window, checklist) │ both folders
+│   └── Tests/Hpsp.Core.Tests/       headless tests: spec examples, vectors, end to end ┘
+├── ReaderSimulator/                 → HpspReaderSimulator.exe
+│   ├── ReaderSimulator.sln
+│   ├── HpspReaderSimulator/         the reader's window
+│   ├── Hpsp.Core/  Hpsp.Demo.Ui/  Tests/      (the same shared code)
+└── build/                           publish scripts, and check-copies.sh
 ```
 
-The two programs are thin: every protocol decision is made in `Hpsp.Core`, which the tests drive directly. You can read the protocol without reading any user-interface code.
+The two programs are thin: every protocol decision is made in `Hpsp.Core`, which the tests drive directly. You can read the protocol without reading any user-interface code. `Hpsp.Core` contains both the ACU engine and the reader engine, because the tests run the two against each other.
+
+**Keeping the copies in step.** The shared folders are copied into both program folders so that either folder can be taken and built alone. `build/check-copies.sh` fails if the copies differ, and the GitHub build runs it. Change one copy, then copy the change across.
 
 ## `Hpsp.Core`, folder by folder
 
@@ -54,6 +60,6 @@ The two programs are thin: every protocol decision is made in `Hpsp.Core`, which
 
 ## Building
 
-- Windows: `dotnet build`, `dotnet run --project src\HpspAcuSimulator`, `dotnet run --project tests\Hpsp.Core.Tests`.
+- Windows: in `AcuSimulator` (or `ReaderSimulator`), `dotnet run --project HpspAcuSimulator` and `dotnet run --project Tests\Hpsp.Core.Tests`, or open the `.sln` in Visual Studio.
 - The release `.exe` files are made by `build/publish.ps1` or `build/publish.sh`: self-contained, single-file, for `win-x64` and `win-arm64`.
 - The projects also build on Linux and macOS, because the Windows Forms reference pack comes from NuGet there (see the `.csproj` files). The tests run there too.
