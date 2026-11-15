@@ -79,7 +79,7 @@ public sealed class MainForm : Form
     private readonly Label _lLed = UiHelpers.Value();
 
     // ---- device ----
-    private readonly GroupBox _gDev; private readonly CheckBox _cSecrets = new() { AutoSize = true };
+    private readonly GroupBox _gDev; private readonly CheckBox _cSecrets = new() { AutoSize = true, MaximumSize = new Size(330, 0) };
     private readonly Button _bViewSecrets = new() { AutoSize = true }, _bReset = new() { AutoSize = true }, _bNew = new() { AutoSize = true };
 
     // ---- checklist bookkeeping (things the engine does not remember) ----
@@ -258,12 +258,18 @@ public sealed class MainForm : Form
         if (_cSecrets.Checked != on) _cSecrets.Checked = on;
         _banner.Visible = on;
         _activity.ShowSecrets = on;
-        _bViewSecrets.Enabled = _mViewSecrets.Enabled = on;
     }
 
     private void ViewSecrets()
     {
-        if (!_cSecrets.Checked) return;
+        // Viewing the keys always goes through the "show secrets" switch, so the red banner is
+        // up whenever secrets are on screen. If it is off, offer to turn it on.
+        if (!_cSecrets.Checked)
+        {
+            if (MessageBox.Show(this, L.T("Secrets are hidden. Turn on \"Show secrets\" to view them?\n\nThis also shows the secret values (keys, pairing values) in the activity window's details, and puts up the red banner."),
+                    L.T("Show secrets"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            SetSecrets(true);
+        }
         UiHelpers.ShowText(this, L.T("Reader secrets (demo only)"), _engine.SecretsText());
     }
 
@@ -276,7 +282,7 @@ public sealed class MainForm : Form
     private void Relabel()
     {
         Text = L.T("HPSP Reader Simulator") + (_instance > 1 ? $" #{_instance}" : "") + $"  -  {_engine.Serial}";
-        _mFile.Text = L.T("&File"); _mShowSecrets.Text = L.T("Show secrets (demo only)"); _mViewSecrets.Text = L.T("View this reader's secrets…");
+        _mFile.Text = L.T("&File"); _mShowSecrets.Text = L.T("Show secrets (keys, pairing values) in this window - demo only"); _mViewSecrets.Text = L.T("View this reader's secrets…");
         _mFolder.Text = L.T("Open the data folder"); _mExit.Text = L.T("E&xit");
         _mView.Text = L.T("&View"); _mChecklist.Text = L.T("Provisioning checklist");
         _mHelp.Text = L.T("&Help"); _mAbout.Text = L.T("About");
@@ -286,7 +292,7 @@ public sealed class MainForm : Form
         _gPair.Text = L.T("Pairing"); _gConn.Text = L.T("Connection to the ACU");
         _gCard.Text = L.T("Card (26-bit H10301)"); _lFc.Text = L.T("Facility"); _lCard.Text = L.T("Card"); _bSwipe.Text = L.T("Swipe card");
         _gDoor.Text = L.T("Door and LED");
-        _gDev.Text = L.T("Device"); _cSecrets.Text = L.T("Show secrets (demo only)"); _bViewSecrets.Text = L.T("View secrets…");
+        _gDev.Text = L.T("Device"); _cSecrets.Text = L.T("Show secrets (keys, pairing values) in this window - demo only"); _bViewSecrets.Text = L.T("View secrets…");
         _bReset.Text = L.T("Factory reset…"); _bNew.Text = L.T("New device…");
         ShowBits();
         RefreshState();

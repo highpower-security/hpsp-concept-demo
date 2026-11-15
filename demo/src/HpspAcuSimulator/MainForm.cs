@@ -55,7 +55,7 @@ public sealed class MainForm : Form
     private readonly NumericUpDown _nUnlock = new() { Minimum = 0.5m, Maximum = 60m, DecimalPlaces = 1, Increment = 0.5m, Width = 70 };
 
     // ---- device / secrets ----
-    private readonly GroupBox _gDev; private readonly CheckBox _cSecrets = new() { AutoSize = true }, _cUnknownMfr = new() { AutoSize = true, MaximumSize = new Size(330, 0) };
+    private readonly GroupBox _gDev; private readonly CheckBox _cSecrets = new() { AutoSize = true, MaximumSize = new Size(330, 0) }, _cUnknownMfr = new() { AutoSize = true, MaximumSize = new Size(330, 0) };
     private readonly Button _bViewSecrets = new() { AutoSize = true };
 
     // ---- readers ----
@@ -342,12 +342,18 @@ public sealed class MainForm : Form
         if (_cSecrets.Checked != on) _cSecrets.Checked = on;
         _banner.Visible = on;
         _activity.ShowSecrets = on;
-        _bViewSecrets.Enabled = _mViewSecrets.Enabled = on;
     }
 
     private void ViewSecrets()
     {
-        if (!_cSecrets.Checked) return;
+        // Viewing the keys always goes through the "show secrets" switch, so the red banner is
+        // up whenever secrets are on screen. If it is off, offer to turn it on.
+        if (!_cSecrets.Checked)
+        {
+            if (MessageBox.Show(this, L.T("Secrets are hidden. Turn on \"Show secrets\" to view them?\n\nThis also shows the secret values (keys, pairing values) in the activity window's details, and puts up the red banner."),
+                    L.T("Show secrets"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            SetSecrets(true);
+        }
         UiHelpers.ShowText(this, L.T("ACU secrets (demo only)"), _engine.SecretsText());
     }
 
@@ -358,12 +364,12 @@ public sealed class MainForm : Form
     private void Relabel()
     {
         Text = L.T("HPSP ACU Simulator") + (_engine.HasSite ? $"  -  {_engine.SiteName}" : "");
-        _mFile.Text = L.T("&File"); _mShowSecrets.Text = L.T("Show secrets (demo only)"); _mViewSecrets.Text = L.T("View the ACU's secrets…");
+        _mFile.Text = L.T("&File"); _mShowSecrets.Text = L.T("Show secrets (keys, pairing values) in this window - demo only"); _mViewSecrets.Text = L.T("View the ACU's secrets…");
         _mFolder.Text = L.T("Open the data folder"); _mExit.Text = L.T("E&xit");
         _mView.Text = L.T("&View"); _mChecklist.Text = L.T("Provisioning checklist"); _mHelp.Text = L.T("&Help"); _mAbout.Text = L.T("About");
         _gSite.Text = L.T("Site"); _bCreate.Text = L.T("Create demo site…");
         _gRules.Text = L.T("Access rules"); _cUnknown.Text = L.T("Allow cards that are not in the access list"); _lUnlock.Text = L.T("Unlock time (seconds):");
-        _gDev.Text = L.T("Demo settings"); _cSecrets.Text = L.T("Show secrets (demo only)"); _bViewSecrets.Text = L.T("View secrets…");
+        _gDev.Text = L.T("Demo settings"); _cSecrets.Text = L.T("Show secrets (keys, pairing values) in this window - demo only"); _bViewSecrets.Text = L.T("View secrets…");
         _cUnknownMfr.Text = L.T("Accept readers from any manufacturer (demo; a real site checks a trusted list)");
         _lReaders.Text = L.T("Readers");
         string[] rc = { L.T("Name"), L.T("Status"), L.T("Address"), L.T("Device ID"), L.T("Events"), L.T("Door"), L.T("Grants"), "TLS" };

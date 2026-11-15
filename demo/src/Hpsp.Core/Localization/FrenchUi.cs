@@ -25,7 +25,9 @@ internal static partial class French
         A("About", "À propos");
         A("E&xit", "&Quitter");
         A("Open the data folder", "Ouvrir le dossier des données");
-        A("Show secrets (demo only)", "Afficher les secrets (démo uniquement)");
+        A("Show secrets (keys, pairing values) in this window - demo only", "Afficher les secrets (clés, valeurs d'appairage) dans cette fenêtre - démo uniquement");
+        A("Show secrets", "Afficher les secrets");
+        A("Secrets are hidden. Turn on \"Show secrets\" to view them?\n\nThis also shows the secret values (keys, pairing values) in the activity window's details, and puts up the red banner.", "Les secrets sont masqués. Activer « Afficher les secrets » pour les voir ?\n\nCela affiche aussi les valeurs secrètes (clés, valeurs d'appairage) dans les détails de la fenêtre d'activité, et fait apparaître le bandeau rouge.");
         A("View secrets…", "Voir les secrets…");
         A("View this reader's secrets…", "Voir les secrets de ce lecteur…");
         A("View the ACU's secrets…", "Voir les secrets de l'ACU…");
