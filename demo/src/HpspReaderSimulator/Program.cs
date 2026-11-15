@@ -26,6 +26,10 @@ internal static class Program
     private static void Main(string[] args)
     {
         ApplicationConfiguration.Initialize();
+        // A demo should explain a problem, not crash: show any unexpected error in plain words.
+        Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+        Application.ThreadException += (_, e) => UiHelpers.ShowError(e.Exception);
+        TaskScheduler.UnobservedTaskException += (_, e) => e.SetObserved();
         string? fixedFolder = Array.Exists(args, a => a.Equals("--data", StringComparison.OrdinalIgnoreCase)) ? UiHelpers.DataFolder("Reader", args) : null;
         int? fixedPort = UiHelpers.IntArg(args, "--pairing-port");
 

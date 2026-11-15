@@ -22,6 +22,10 @@ internal static class Program
     private static void Main(string[] args)
     {
         ApplicationConfiguration.Initialize();
+        // A demo should explain a problem, not crash: show any unexpected error in plain words.
+        Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+        Application.ThreadException += (_, e) => UiHelpers.ShowError(e.Exception);
+        TaskScheduler.UnobservedTaskException += (_, e) => e.SetObserved();
         string folder = UiHelpers.DataFolder("ACU", args);
         // Only one ACU Simulator per data folder (they would fight over the same files and port).
         using var mutex = new Mutex(true, "HPSP-Demo-ACU-" + Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(folder.ToLowerInvariant())))[..16], out bool created);

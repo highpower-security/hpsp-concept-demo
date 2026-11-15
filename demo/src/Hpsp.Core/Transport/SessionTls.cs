@@ -82,7 +82,7 @@ public static class SessionTls
             },
         };
         try { await ssl.AuthenticateAsServerAsync(opts, ct).ConfigureAwait(false); }
-        catch (Exception e) { ssl.Dispose(); throw new AuthenticationException("TLS handshake failed: " + (reason ?? e.Message), e); }
+        catch (Exception e) { ssl.Dispose(); throw new AuthenticationException("TLS handshake failed: " + (reason ?? DemoPki.Explain(e)), e); }
         return (ssl, Describe(ssl));
     }
 
@@ -125,7 +125,7 @@ public static class SessionTls
             },
         };
         try { await ssl.AuthenticateAsClientAsync(opts, ct).ConfigureAwait(false); }
-        catch (Exception e) { ssl.Dispose(); tcp.Dispose(); throw new AuthenticationException("TLS handshake failed: " + (reason ?? e.Message), e); }
+        catch (Exception e) { ssl.Dispose(); tcp.Dispose(); throw new AuthenticationException("TLS handshake failed: " + (reason ?? DemoPki.Explain(e)), e); }
         return (ssl, Describe(ssl));
     }
 

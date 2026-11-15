@@ -127,7 +127,7 @@ public sealed partial class AcuEngine : IDisposable
     public string SecretsText()
     {
         if (!HasSite) return L.T("(no site yet)");
-        string K(X509Certificate2 c) { using var k = c.GetECDsaPrivateKey(); return k is null ? "-" : Convert.ToHexString(k.ExportPkcs8PrivateKey()).ToLowerInvariant(); }
+        string K(X509Certificate2 c) { using var k = c.GetECDsaPrivateKey(); return k is null ? "-" : Convert.ToHexString(DemoPki.ExportPrivateKeyPkcs8(k)).ToLowerInvariant(); }
         return L.F("Site root private key (PKCS#8): {0}\nACU TLS private key (PKCS#8): {1}\nGrant signer private key (PKCS#8): {2}", K(SiteRoot!), K(AcuCertificate!), K(SignerCertificate!));
     }
 

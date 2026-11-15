@@ -159,6 +159,13 @@ public static class UiHelpers
     public static Label Value(float size = 9f, bool bold = false) =>
         new() { AutoSize = true, Font = new Font("Segoe UI", size, bold ? FontStyle.Bold : FontStyle.Regular), MaximumSize = new Size(330, 0), Margin = new Padding(3, 2, 3, 2) };
 
+    /// <summary>Show an unexpected error in plain words, with the details for a bug report.</summary>
+    public static void ShowError(Exception e)
+    {
+        MessageBox.Show(L.F("Something went wrong, but the program can continue.\n\n{0}\n\nIf this keeps happening, please report it with this message.", Hpsp.Core.Security.DemoPki.Explain(e)),
+            "HPSP Demo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+    }
+
     public static void ShowText(IWin32Window owner, string title, string text)
     {
         using var f = new Form { Text = title, Width = 820, Height = 520, StartPosition = FormStartPosition.CenterParent, ShowInTaskbar = false };

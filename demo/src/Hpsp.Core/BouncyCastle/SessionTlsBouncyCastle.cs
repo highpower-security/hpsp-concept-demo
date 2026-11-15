@@ -64,7 +64,7 @@ public static class SessionTlsBouncyCastle
             var proto = new TlsServerProtocol();          // non-blocking mode: see OwningStream
             using var cut = ct.Register(() => { try { tcp.Dispose(); } catch { } });   // timeout or cancel stops a waiting handshake
             try { proto.Accept(server); OwningStream.Handshake(proto, tcp.GetStream()); }
-            catch (Exception e) { tcp.Dispose(); throw new System.Security.Authentication.AuthenticationException("TLS handshake failed: " + (server.Reason ?? e.Message), e); }
+            catch (Exception e) { tcp.Dispose(); throw new System.Security.Authentication.AuthenticationException("TLS handshake failed: " + (server.Reason ?? DemoPki.Explain(e)), e); }
             return ((Stream)new OwningStream(proto, tcp), Describe(server.Ctx, server.PeerCert));
         }, ct);
 
@@ -81,7 +81,7 @@ public static class SessionTlsBouncyCastle
             var proto = new TlsClientProtocol();          // non-blocking mode: see OwningStream
             using var cut = ct.Register(() => { try { tcp.Dispose(); } catch { } });
             try { proto.Connect(client); OwningStream.Handshake(proto, tcp.GetStream()); }
-            catch (Exception e) { tcp.Dispose(); throw new System.Security.Authentication.AuthenticationException("TLS handshake failed: " + (client.Reason ?? e.Message), e); }
+            catch (Exception e) { tcp.Dispose(); throw new System.Security.Authentication.AuthenticationException("TLS handshake failed: " + (client.Reason ?? DemoPki.Explain(e)), e); }
             return ((Stream)new OwningStream(proto, tcp), Describe(client.Ctx, client.PeerCert));
         }, ct).ConfigureAwait(false);
     }
@@ -94,7 +94,7 @@ public static class SessionTlsBouncyCastle
     private static ECPrivateKeyParameters ToBcKey(X509Certificate2 certWithKey)
     {
         using var k = certWithKey.GetECDsaPrivateKey() ?? throw new InvalidOperationException("certificate has no private key");
-        var p = k.ExportParameters(true);
+        var p = DemoPki.ExportPrivateParameters(k);    // works on Windows too (see there)
         var domain = new ECDomainParameters(ECNamedCurveTable.GetByName("P-256"));
         return new ECPrivateKeyParameters("EC", new BcBigInteger(1, p.D), domain);
     }
@@ -142,6 +142,18 @@ public static class SessionTlsBouncyCastle
         public override BcCertificateRequest GetCertificateRequest() =>
             new(Array.Empty<byte>(), EcdsaP256Only(), null, null);
 
+        // Record WHY an alert was raised (BouncyCastle turns any unexpected exception into
+        // internal_error; this keeps the real reason for the activity window).
+        public override void NotifyAlertRaised(short alertLevel, short alertDescription, string message, Exception cause)
+        {
+            if (Reason is null && alertLevel == AlertLevel.fatal)
+                Reason = AlertDescription.GetText(alertDescription) + (cause is null ? (message is null ? "" : ": " + message) : ": " + DemoPki.Explain(cause));
+        }
+        public override void NotifyAlertReceived(short alertLevel, short alertDescription)
+        {
+            if (Reason is null && alertLevel == AlertLevel.fatal) Reason = "the other side refused: " + AlertDescription.GetText(alertDescription);
+        }
+
         public override void NotifyClientCertificate(BcCertificate clientCertificate)
         {
             PeerCert = FirstCert(clientCertificate);
@@ -169,6 +181,15 @@ public static class SessionTlsBouncyCastle
         protected override IList<ProtocolName> GetProtocolNames() => new List<ProtocolName> { Alpn };
         protected override IList<SignatureAndHashAlgorithm> GetSupportedSignatureAlgorithms() => EcdsaP256Only();
         public override TlsAuthentication GetAuthentication() => new Auth(this);
+        public override void NotifyAlertRaised(short alertLevel, short alertDescription, string message, Exception cause)
+        {
+            if (Reason is null && alertLevel == AlertLevel.fatal)
+                Reason = AlertDescription.GetText(alertDescription) + (cause is null ? (message is null ? "" : ": " + message) : ": " + DemoPki.Explain(cause));
+        }
+        public override void NotifyAlertReceived(short alertLevel, short alertDescription)
+        {
+            if (Reason is null && alertLevel == AlertLevel.fatal) Reason = "the other side refused: " + AlertDescription.GetText(alertDescription);
+        }
 
         private sealed class Auth : TlsAuthentication
         {

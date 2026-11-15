@@ -255,6 +255,46 @@ public static class DemoPki
         return new X509Certificate2(pfx, (string?)null, X509KeyStorageFlags.Exportable);
     }
 
+    /// <summary>
+    /// The private key as PKCS#8 bytes. On Windows, a key loaded from a PFX file may refuse a
+    /// plain export ("the requested operation is not supported") and allow only an ENCRYPTED
+    /// export, so we export it encrypted under a throwaway password and decrypt it again here.
+    /// (Linux and macOS allow the plain export directly.)
+    /// </summary>
+    public static byte[] ExportPrivateKeyPkcs8(ECDsa key)
+    {
+        try { return key.ExportPkcs8PrivateKey(); }
+        catch (CryptographicException)
+        {
+            const string temp = "hpsp-demo-temporary";
+            byte[] enc = key.ExportEncryptedPkcs8PrivateKey(temp, new PbeParameters(PbeEncryptionAlgorithm.Aes128Cbc, HashAlgorithmName.SHA256, 1));
+            using var copy = ECDsa.Create();
+            copy.ImportEncryptedPkcs8PrivateKey(temp, enc, out _);
+            return copy.ExportPkcs8PrivateKey();
+        }
+    }
+
+    /// <summary>The private key's parameters (curve, public point, private value), exported as above.</summary>
+    public static ECParameters ExportPrivateParameters(ECDsa key)
+    {
+        try { return key.ExportParameters(true); }
+        catch (CryptographicException)
+        {
+            using var copy = ECDsa.Create();
+            copy.ImportPkcs8PrivateKey(ExportPrivateKeyPkcs8(key), out _);
+            return copy.ExportParameters(true);
+        }
+    }
+
+    /// <summary>An exception and the exceptions inside it, as one line ("see inner exception" is no help).</summary>
+    public static string Explain(Exception e)
+    {
+        var parts = new List<string>();
+        for (Exception? x = e; x is not null && parts.Count < 4; x = x.InnerException)
+            if (!parts.Contains(x.Message)) parts.Add(x.Message);
+        return string.Join(" → ", parts);
+    }
+
     /// <summary>Save a certificate with its key (DEMO ONLY: no password, plain file).</summary>
     public static byte[] ExportWithKey(X509Certificate2 c) => c.Export(X509ContentType.Pkcs12);
     public static X509Certificate2 ImportWithKey(byte[] pfx) => new(pfx, (string?)null, X509KeyStorageFlags.Exportable);

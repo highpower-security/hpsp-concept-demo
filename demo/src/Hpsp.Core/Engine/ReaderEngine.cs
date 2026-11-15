@@ -140,7 +140,7 @@ public sealed partial class ReaderEngine : IDisposable
     private static string KeyHex(X509Certificate2 c)
     {
         using var k = c.GetECDsaPrivateKey();
-        return k is null ? "-" : Convert.ToHexString(k.ExportPkcs8PrivateKey()).ToLowerInvariant();
+        return k is null ? "-" : Convert.ToHexString(DemoPki.ExportPrivateKeyPkcs8(k)).ToLowerInvariant();
     }
 
     // =========================================================================

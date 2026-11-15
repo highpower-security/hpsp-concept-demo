@@ -131,6 +131,7 @@ internal static partial class French
         A("too many wrong codes", "trop de codes erronés");
         A("Refused a second pairing connection from {0}: one attempt at a time.", "Seconde connexion d'appairage depuis {0} refusée : une seule tentative à la fois.");
         A("this reader has been removed", "ce lecteur a été retiré");
+        A("Something went wrong, but the program can continue.\n\n{0}\n\nIf this keeps happening, please report it with this message.", "Un problème est survenu, mais le programme peut continuer.\n\n{0}\n\nSi cela se reproduit, merci de le signaler avec ce message.");
         A("The reader is busy with another pairing attempt; trying again…", "Le lecteur traite une autre tentative d'appairage ; nouvel essai…");
         A("trust_update refused: ", "trust_update refusé : ");
         A("{0} card read(s) from before the restart were discarded (card reads are not kept across a restart).", "{0} lecture(s) de carte antérieure(s) au redémarrage ont été abandonnée(s) (les lectures de carte ne sont pas conservées après un redémarrage).");
