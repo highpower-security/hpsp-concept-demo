@@ -214,8 +214,8 @@ public static class EndToEndTests
 
             // ---- removing the reader shuts it out ----
             acu.RemoveReader(reader.DeviceId);
-            await Task.Delay(1500);
-            check(AcuSaw("not paired here or was removed"), "removed reader is refused at hello");
+            // The reader retries with a back-off (1, 2, 4… s), so wait for its next attempt.
+            check(await Until(() => AcuSaw("not paired here or was removed"), 20000), "removed reader is refused at hello");
 
             // ---- review fix H1: card reads are not kept across a restart ----
             reader.PullCable();
