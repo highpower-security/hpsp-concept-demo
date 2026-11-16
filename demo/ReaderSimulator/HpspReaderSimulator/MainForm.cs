@@ -153,7 +153,7 @@ public sealed class MainForm : Form
         _bViewSecrets.Click += (_, _) => ViewSecrets();
         _mFolder.Click += (_, _) => { try { System.Diagnostics.Process.Start("explorer.exe", _folder); } catch { } };
         _mExit.Click += (_, _) => Close();
-        _mAbout.Click += (_, _) => MessageBox.Show(this, L.T("HPSP Reader Simulator, version 0.5.0 (demo).\n\nA teaching demo of the High Performance Security Protocol: a simulated card reader that pairs with an ACU, reports 26-bit card swipes over TLS 1.3, and opens its door only for a valid signed grant.\n\nCopyright (c) 2026 Highpower Security Products LLC. Apache License 2.0.\nUses BouncyCastle (MIT licence) and QRCoder (MIT licence)."), Text);
+        _mAbout.Click += (_, _) => MessageBox.Show(this, L.T("HPSP Reader Simulator, version 0.6.0 (demo).\n\nA teaching demo of the High Performance Security Protocol: a simulated card reader that pairs with an ACU, reports 26-bit card swipes over TLS 1.3, and opens its door only for a valid signed grant.\n\nCopyright (c) 2026 Highpower Security Products LLC. Apache License 2.0.\nUses BouncyCastle (MIT licence) and QRCoder (MIT licence)."), Text);
         _bCopyQr.Click += (_, _) => { Clipboard.SetText(_engine.QrText); _bCopyQr.Text = L.T("Copied"); };
         _bPair.Click += (_, _) => { if (_engine.PairingWindowOpen) _engine.ClosePairingWindow(); else _engine.OpenPairingWindow(); RefreshState(); };
         _bCable.Click += (_, _) =>

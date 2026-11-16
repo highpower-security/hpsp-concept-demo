@@ -13,7 +13,7 @@ Each one is a single `.exe` file. There is nothing to install, and you don't nee
 
 ## 1. Pick the right download
 
-The ready-made programs are on this repository's **Releases** page. Each build comes as two zip files, named `HPSP-Demo-<version>-build<n>-<kind of PC>.zip`, for example `HPSP-Demo-0.5.0-build2-win-arm64.zip`. A higher build number is newer. Choose the zip that matches your PC's processor:
+The ready-made programs are on this repository's **Releases** page. Each build comes as two zip files, named `HPSP-Demo-<version>-build<n>-<kind of PC>.zip`, for example `HPSP-Demo-0.6.0-build5-win-arm64.zip`. A higher build number is newer. Choose the zip that matches your PC's processor:
 
 | Your PC | Download |
 |---|---|

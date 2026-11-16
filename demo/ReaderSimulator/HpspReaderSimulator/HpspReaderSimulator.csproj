@@ -15,8 +15,8 @@
     <Product>HPSP Reader Simulator</Product>
     <Company>Highpower Security Products LLC</Company>
     <Copyright>Copyright (c) 2026 Highpower Security Products LLC. Apache-2.0.</Copyright>
-    <Version>0.5.0</Version>
-    <InformationalVersion>0.5.0-demo</InformationalVersion>
+    <Version>0.6.0</Version>
+    <InformationalVersion>0.6.0-demo</InformationalVersion>
     <!-- The release .exe files are made with (see build/publish.sh):
            dotnet publish -c Release -r win-x64  (or win-arm64) self-contained, single file
          so no .NET installation is needed on the PC that runs them. -->

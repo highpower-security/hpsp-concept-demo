@@ -13,7 +13,7 @@ Chacun est un unique fichier `.exe`. Il n'y a rien à installer, et .NET n'est p
 
 ## 1. Choisir le bon téléchargement
 
-Les programmes prêts à l'emploi se trouvent sur la page **Releases** de ce dépôt. Chaque build se présente sous forme de deux fichiers zip, nommés `HPSP-Demo-<version>-build<n>-<type de PC>.zip`, par exemple `HPSP-Demo-0.5.0-build2-win-arm64.zip`. Plus le numéro de build est élevé, plus il est récent. Choisissez le zip qui correspond au processeur de votre PC :
+Les programmes prêts à l'emploi se trouvent sur la page **Releases** de ce dépôt. Chaque build se présente sous forme de deux fichiers zip, nommés `HPSP-Demo-<version>-build<n>-<type de PC>.zip`, par exemple `HPSP-Demo-0.6.0-build5-win-arm64.zip`. Plus le numéro de build est élevé, plus il est récent. Choisissez le zip qui correspond au processeur de votre PC :
 
 | Votre PC | Téléchargement |
 |---|---|

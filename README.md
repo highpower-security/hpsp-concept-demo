@@ -14,7 +14,7 @@ This repository holds:
 
 **→ [RUNNING.md](RUNNING.md)** explains which file to download, how to start the programs and the five-minute walkthrough. ([Version française : RUNNING.fr.md](RUNNING.fr.md))
 
-In short: download the zip for your PC from **Releases**, for example `HPSP-Demo-0.5.0-build2-win-arm64.zip` (`win-x64` for Intel/AMD, `win-arm64` for Arm PCs and Windows on Apple-silicon Macs; a higher build number is newer). Run **`HpspAcuSimulator.exe`**, then **`HpspReaderSimulator.exe`**, and follow the **Provisioning checklist** panel in each window.
+In short: download the zip for your PC from **Releases**, for example `HPSP-Demo-0.6.0-build5-win-arm64.zip` (`win-x64` for Intel/AMD, `win-arm64` for Arm PCs and Windows on Apple-silicon Macs; a higher build number is newer). Run **`HpspAcuSimulator.exe`**, then **`HpspReaderSimulator.exe`**, and follow the **Provisioning checklist** panel in each window.
 
 | Program | What you can do |
 |---|---|

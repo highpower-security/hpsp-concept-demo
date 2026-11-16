@@ -39,7 +39,7 @@ namespace Hpsp.Core.Engine;
 public sealed partial class ReaderEngine : IDisposable
 {
     public const ushort ReaderCid = 0, StrikeCid = 2, LedCid = 6;
-    public const string Manufacturer = "HPSP Demo", Product = "Reader Simulator", HwRev = "sim", FwVersion = "0.5.0-demo";
+    public const string Manufacturer = "HPSP Demo", Product = "Reader Simulator", HwRev = "sim", FwVersion = "0.6.0-demo";
 
     private readonly string _statePath;
     private readonly object _lock = new();

@@ -174,7 +174,7 @@ public sealed class MainForm : Form
         _bViewSecrets.Click += (_, _) => ViewSecrets();
         _mFolder.Click += (_, _) => { try { System.Diagnostics.Process.Start("explorer.exe", _folder); } catch { } };
         _mExit.Click += (_, _) => Close();
-        _mAbout.Click += (_, _) => MessageBox.Show(this, L.T("HPSP ACU Simulator, version 0.5.0 (demo).\n\nA teaching demo of the High Performance Security Protocol: a simulated access control unit that pairs readers, keeps an access list, and sends signed grants to open doors over TLS 1.3.\n\nCopyright (c) 2026 Highpower Security Products LLC. Apache License 2.0.\nUses BouncyCastle (MIT licence)."), Text);
+        _mAbout.Click += (_, _) => MessageBox.Show(this, L.T("HPSP ACU Simulator, version 0.6.0 (demo).\n\nA teaching demo of the High Performance Security Protocol: a simulated access control unit that pairs readers, keeps an access list, and sends signed grants to open doors over TLS 1.3.\n\nCopyright (c) 2026 Highpower Security Products LLC. Apache License 2.0.\nUses BouncyCastle (MIT licence)."), Text);
         _bCreate.Click += (_, _) => CreateSite();
         _bListen.Click += (_, _) => { if (_engine.Listening) _engine.Stop(); else _engine.Start(); RefreshState(); };
         _cUnknown.Checked = _engine.Access.AllowUnknownCards;
