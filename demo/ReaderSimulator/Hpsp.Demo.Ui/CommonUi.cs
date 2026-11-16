@@ -48,6 +48,35 @@ public sealed class SecretsBanner : Label
 }
 
 /// <summary>
+/// Makes a check box or radio button wrap its text onto several lines instead of
+/// growing wider than the left-hand panel. (WinForms check boxes and radio buttons
+/// never wrap when AutoSize is on: a long label made the panel scroll sideways.)
+/// </summary>
+public static class WrappingText
+{
+    public const int DefaultWidth = 330;
+
+    public static T Apply<T>(T box, int width = DefaultWidth) where T : ButtonBase
+    {
+        box.AutoSize = false;
+        box.TextAlign = ContentAlignment.TopLeft;
+        if (box is CheckBox c) c.CheckAlign = ContentAlignment.TopLeft;
+        if (box is RadioButton r) r.CheckAlign = ContentAlignment.TopLeft;
+        void Fit()
+        {
+            // Room left for the text after the tick box and its gap.
+            int textWidth = width - SystemInformation.MenuCheckSize.Width - 8;
+            var size = TextRenderer.MeasureText(box.Text, box.Font, new Size(textWidth, 0), TextFormatFlags.WordBreak);
+            box.Size = new Size(width, Math.Max(size.Height, box.Font.Height) + 6);
+        }
+        box.TextChanged += (_, _) => Fit();
+        box.FontChanged += (_, _) => Fit();
+        Fit();
+        return box;
+    }
+}
+
+/// <summary>
 /// Choose which TLS 1.3 code the program uses for normal sessions:
 ///  - "Windows built-in (SChannel)": the TLS that comes with Windows 11. Not on Windows 10,
 ///    whose SChannel has no TLS 1.3, so that choice is greyed out there.
@@ -56,7 +85,7 @@ public sealed class SecretsBanner : Label
 /// </summary>
 public sealed class TlsEnginePicker : GroupBox
 {
-    private readonly RadioButton _win = new() { AutoSize = true }, _bc = new() { AutoSize = true };
+    private readonly RadioButton _win = WrappingText.Apply(new RadioButton()), _bc = WrappingText.Apply(new RadioButton());
     private readonly Button _test = new() { AutoSize = true };
     private readonly Label _note = new() { AutoSize = true, ForeColor = SystemColors.GrayText, MaximumSize = new Size(330, 0) };
     private readonly ToolTip _tip = new();

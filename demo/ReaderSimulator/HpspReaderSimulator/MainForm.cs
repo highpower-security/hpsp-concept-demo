@@ -79,7 +79,7 @@ public sealed class MainForm : Form
     private readonly Label _lLed = UiHelpers.Value();
 
     // ---- device ----
-    private readonly GroupBox _gDev; private readonly CheckBox _cSecrets = new() { AutoSize = true, MaximumSize = new Size(330, 0) };
+    private readonly GroupBox _gDev; private readonly CheckBox _cSecrets = WrappingText.Apply(new CheckBox());
     private readonly Button _bViewSecrets = new() { AutoSize = true }, _bReset = new() { AutoSize = true }, _bNew = new() { AutoSize = true };
 
     // ---- checklist bookkeeping (things the engine does not remember) ----

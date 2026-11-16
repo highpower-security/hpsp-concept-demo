@@ -50,12 +50,12 @@ public sealed class MainForm : Form
     private readonly Button _bCreate = new() { AutoSize = true }, _bListen = new() { AutoSize = true, Font = new Font("Segoe UI", 9.5f, FontStyle.Bold) };
 
     // ---- access rules ----
-    private readonly GroupBox _gRules; private readonly CheckBox _cUnknown = new() { AutoSize = true, MaximumSize = new Size(330, 0) };
+    private readonly GroupBox _gRules; private readonly CheckBox _cUnknown = WrappingText.Apply(new CheckBox());
     private readonly Label _lUnlock = UiHelpers.Value();
     private readonly NumericUpDown _nUnlock = new() { Minimum = 0.5m, Maximum = 60m, DecimalPlaces = 1, Increment = 0.5m, Width = 70 };
 
     // ---- device / secrets ----
-    private readonly GroupBox _gDev; private readonly CheckBox _cSecrets = new() { AutoSize = true, MaximumSize = new Size(330, 0) }, _cUnknownMfr = new() { AutoSize = true, MaximumSize = new Size(330, 0) };
+    private readonly GroupBox _gDev; private readonly CheckBox _cSecrets = WrappingText.Apply(new CheckBox()), _cUnknownMfr = WrappingText.Apply(new CheckBox());
     private readonly Button _bViewSecrets = new() { AutoSize = true };
 
     // ---- readers ----
