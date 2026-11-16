@@ -39,9 +39,14 @@ using Hpsp.Core.Security;
 namespace Hpsp.Core.Transport;
 
 /// <summary>Facts about an established session, for the activity window.</summary>
-public sealed record TlsInfo(string Protocol, string Cipher, string Alpn, string PeerSubject, string PeerFingerprint, Guid? PeerDeviceId)
+/// <remarks>
+/// <paramref name="KeyExchange"/> is the TLS key-exchange group, for example
+/// "SecP256r1MLKEM768 (hybrid post-quantum)". It is null when the TLS engine does not report it:
+/// .NET's SslStream (the Windows engine) has no way to ask which group Windows chose.
+/// </remarks>
+public sealed record TlsInfo(string Protocol, string Cipher, string Alpn, string PeerSubject, string PeerFingerprint, Guid? PeerDeviceId, string? KeyExchange = null)
 {
-    public override string ToString() => $"{Protocol}, {Cipher}, ALPN {Alpn}, peer \"{PeerSubject}\" ({PeerFingerprint})";
+    public override string ToString() => $"{Protocol}, {Cipher}, key exchange {KeyExchange ?? "not reported by this TLS engine"}, ALPN {Alpn}, peer \"{PeerSubject}\" ({PeerFingerprint})";
 }
 
 public static class SessionTls

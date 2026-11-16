@@ -162,6 +162,10 @@ public static class EndToEndTests
             check(await Until(() => reader.SignerCount == 1), "ACU sent trust_update; reader now trusts one grant signer");
             var sess = acu.Sessions.First(s => s.DeviceId == reader.DeviceId);
             check(sess.Tls?.Protocol.Contains("1.3") == true, $"session is TLS 1.3 ({sess.Tls?.Protocol} {sess.Tls?.Cipher})");
+            // Post-quantum (spec 5.18): BouncyCastle negotiates the hybrid group; pairing always uses BouncyCastle.
+            if (kind == TlsEngineKind.BouncyCastle)
+                check(sess.Tls?.KeyExchange?.StartsWith("SecP256r1MLKEM768") == true, $"session key exchange is hybrid post-quantum ({sess.Tls?.KeyExchange})");
+            check(rdrLog.Any(x => x.Contains("Pairing TLS established") && x.Contains("MLKEM768")), "pairing TLS used a hybrid post-quantum key exchange");
 
             // ---- allowed card ----
             reader.SwipeCard(142, 54321);

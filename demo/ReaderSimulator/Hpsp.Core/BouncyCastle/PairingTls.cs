@@ -70,7 +70,7 @@ public sealed class PairingTlsConnection : IDisposable
     {
         var sp = _context.SecurityParameters;
         string suite = sp.CipherSuite == CipherSuite.TLS_AES_128_GCM_SHA256 ? "TLS_AES_128_GCM_SHA256" : "0x" + sp.CipherSuite.ToString("x4");
-        return $"TLS 1.3 (BouncyCastle), {suite}, pre-shared key + {NamedGroup.GetName(sp.NegotiatedGroup)} key exchange, ALPN {sp.ApplicationProtocol?.GetUtf8Decoding()}";
+        return $"TLS 1.3 (BouncyCastle), {suite}, pre-shared key + {PostQuantumGroups.Describe(sp.NegotiatedGroup)} key exchange, ALPN {sp.ApplicationProtocol?.GetUtf8Decoding()}";
     }
 
     public void Dispose() { try { _protocol.Close(); } catch { /* already closed */ } }
@@ -119,7 +119,9 @@ public static class PairingTls
         }
         protected override ProtocolVersion[] GetSupportedVersions() => ProtocolVersion.TLSv13.Only();
         protected override int[] GetSupportedCipherSuites() => new[] { CipherSuite.TLS_AES_128_GCM_SHA256 };
-        protected override IList<int> GetSupportedGroups(IList<int> namedGroupRoles) => new List<int> { NamedGroup.secp256r1 };
+        // The (EC)DHE half of psk_dhe_ke uses a hybrid post-quantum group when possible (spec 5.18.2).
+        protected override IList<int> GetSupportedGroups(IList<int> namedGroupRoles) => PostQuantumGroups.Supported(Crypto).ToList();
+        public override IList<int> GetEarlyKeyShareGroups() => new List<int> { PostQuantumGroups.Supported(Crypto)[0] };
         protected override IList<ProtocolName> GetProtocolNames() => new List<ProtocolName> { Alpn };
         public override IList<TlsPskExternal> GetExternalPsks() => new List<TlsPskExternal> { _psk };
         public override short[] GetPskKeyExchangeModes() => new[] { PskKeyExchangeMode.psk_dhe_ke };
@@ -140,7 +142,7 @@ public static class PairingTls
         }
         protected override ProtocolVersion[] GetSupportedVersions() => ProtocolVersion.TLSv13.Only();
         protected override int[] GetSupportedCipherSuites() => new[] { CipherSuite.TLS_AES_128_GCM_SHA256 };
-        public override int[] GetSupportedGroups() => new[] { NamedGroup.secp256r1 };
+        public override int[] GetSupportedGroups() => PostQuantumGroups.Supported(Crypto);
         protected override IList<ProtocolName> GetProtocolNames() => new List<ProtocolName> { Alpn };
         public override TlsPskExternal GetExternalPsk(IList<PskIdentity> identities)
         {

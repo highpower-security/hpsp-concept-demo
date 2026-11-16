@@ -116,7 +116,8 @@ public static class SessionTlsBouncyCastle
             _ => "0x" + sp.CipherSuite.ToString("x4"),
         };
         return new TlsInfo("TLS 1.3", suite + " (BouncyCastle)", sp.ApplicationProtocol?.GetUtf8Decoding() ?? "",
-            peer?.Subject ?? "(none)", peer is null ? "-" : DemoPki.Fingerprint(peer), peer is null ? null : DemoPki.DeviceIdOf(peer));
+            peer?.Subject ?? "(none)", peer is null ? "-" : DemoPki.Fingerprint(peer), peer is null ? null : DemoPki.DeviceIdOf(peer),
+            PostQuantumGroups.Describe(sp.NegotiatedGroup));
     }
 
     private static IList<SignatureAndHashAlgorithm> EcdsaP256Only() =>
@@ -134,7 +135,8 @@ public static class SessionTlsBouncyCastle
         public TlsContext Ctx => m_context;
         protected override ProtocolVersion[] GetSupportedVersions() => ProtocolVersion.TLSv13.Only();
         protected override int[] GetSupportedCipherSuites() => Suites;
-        public override int[] GetSupportedGroups() => new[] { NamedGroup.secp256r1 };
+        // Hybrid post-quantum groups first, secp256r1 as the fallback (PostQuantumGroups.cs).
+        public override int[] GetSupportedGroups() => PostQuantumGroups.Supported(_crypto);
         protected override IList<ProtocolName> GetProtocolNames() => new List<ProtocolName> { Alpn };
         public override TlsCredentials GetCredentials() => Signer(m_context, _crypto, _cert, ToBcChain(_crypto, _cert));
 
@@ -177,7 +179,10 @@ public static class SessionTlsBouncyCastle
         public TlsContext Ctx => m_context;
         protected override ProtocolVersion[] GetSupportedVersions() => ProtocolVersion.TLSv13.Only();
         protected override int[] GetSupportedCipherSuites() => Suites;
-        protected override IList<int> GetSupportedGroups(IList<int> namedGroupRoles) => new List<int> { NamedGroup.secp256r1 };
+        // Hybrid post-quantum groups first, secp256r1 as the fallback (PostQuantumGroups.cs). The first
+        // ClientHello already carries a hybrid key share, so a hybrid server needs no extra round trip.
+        protected override IList<int> GetSupportedGroups(IList<int> namedGroupRoles) => PostQuantumGroups.Supported(_crypto).ToList();
+        public override IList<int> GetEarlyKeyShareGroups() => new List<int> { PostQuantumGroups.Supported(_crypto)[0] };
         protected override IList<ProtocolName> GetProtocolNames() => new List<ProtocolName> { Alpn };
         protected override IList<SignatureAndHashAlgorithm> GetSupportedSignatureAlgorithms() => EcdsaP256Only();
         public override TlsAuthentication GetAuthentication() => new Auth(this);

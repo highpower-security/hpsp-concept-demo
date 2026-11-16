@@ -24,6 +24,8 @@ Pour vérifier, ouvrez **Paramètres → Système → Informations système** et
 
 Systèmes pris en charge : **Windows 11** et **Windows 10**. Sous Windows 10, l'option TLS « Intégré à Windows » est grisée, car Windows 10 n'a pas TLS 1.3. Les programmes utilisent à la place l'option BouncyCastle, qui fonctionne de la même façon.
 
+L'option BouncyCastle utilise un **échange de clés hybride post-quantique** (SecP256r1MLKEM768, issu de HPSP 0.6). Le panneau Connexion du lecteur et la colonne TLS de l'ACU indiquent l'échange de clés utilisé par chaque session. Le TLS propre à Windows ne l'utilise que si Windows a été mis à jour en conséquence ; sinon il utilise secp256r1 classique.
+
 ## 2. Premier lancement : deux invites de Windows
 
 Les programmes ne sont pas signés (c'est une démo), donc Windows pose deux questions au premier lancement :

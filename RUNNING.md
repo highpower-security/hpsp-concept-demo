@@ -24,6 +24,8 @@ To check, open **Settings → System → About** and look at *System type*. "x64
 
 Supported: **Windows 11** and **Windows 10**. On Windows 10, the "Windows built-in" TLS option is greyed out because Windows 10 has no TLS 1.3. The programs use the BouncyCastle option instead, and it works the same.
 
+The BouncyCastle option uses **hybrid post-quantum key exchange** (SecP256r1MLKEM768, from HPSP 0.6). The reader's Connection panel and the ACU's TLS column show which key exchange each session used. Windows' own TLS uses it only when Windows has been updated for it; otherwise it uses classical secp256r1.
+
 ## 2. First start: two Windows prompts
 
 The programs are not code-signed (this is a demo), so Windows asks twice the first time:

@@ -100,7 +100,7 @@ public sealed class MainForm : Form
         left.Controls.AddRange(new Control[] { _gSite, _tls, _gRules, _gDev });
 
         // ---- readers panel ----
-        foreach (var w in new[] { 150, 90, 130, 250, 60, 80, 70, 230 }) _readers.Columns.Add("", w);
+        foreach (var w in new[] { 150, 90, 130, 250, 60, 80, 70, 420 }) _readers.Columns.Add("", w);
         var readerButtons = new FlowLayoutPanel { Dock = DockStyle.Bottom, AutoSize = true, Padding = new Padding(2) };
         readerButtons.Controls.AddRange(new Control[] { _bAdd, _bUnlock, _bLock, _bAttack, _bRemove });
         var readersPanel = new Panel { Dock = DockStyle.Fill };
@@ -414,7 +414,7 @@ public sealed class MainForm : Form
         {
             sessions.TryGetValue(r.DeviceId, out var s);
             string status = r.Removed ? L.T("removed") : s is { HelloDone: true } ? L.T("online") : L.T("offline");
-            return (r.DeviceId, Cells: new[] { r.Name, status, s?.Address ?? "", r.DeviceId.ToString(), s?.EventsReceived.ToString() ?? "", s?.DoorState ?? "", r.GrantCounter.ToString(), s?.Tls is { } t ? $"{t.Protocol} {t.Cipher}" : "" }, Online: s is { HelloDone: true }, r.Removed);
+            return (r.DeviceId, Cells: new[] { r.Name, status, s?.Address ?? "", r.DeviceId.ToString(), s?.EventsReceived.ToString() ?? "", s?.DoorState ?? "", r.GrantCounter.ToString(), s?.Tls is { } t ? $"{t.Protocol} · {t.Cipher}" + (t.KeyExchange is null ? "" : " · " + t.KeyExchange) : "" }, Online: s is { HelloDone: true }, r.Removed);
         }).ToList();
         string sig = string.Join("|", rows.Select(x => string.Join(",", x.Cells)));
         if (sig != _readersSig)

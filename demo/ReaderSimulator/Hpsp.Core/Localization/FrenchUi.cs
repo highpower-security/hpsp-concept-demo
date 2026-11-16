@@ -68,7 +68,12 @@ internal static partial class French
         A("TLS engine for sessions", "Moteur TLS des sessions");
         A("Windows built-in", "intégré à Windows");
         A("Windows built-in (SChannel)", "Intégré à Windows (SChannel)");
-        A("BouncyCastle (works on Windows 10 too)", "BouncyCastle (fonctionne aussi sous Windows 10)");
+        A("BouncyCastle (post-quantum key exchange; works on Windows 10 too)", "BouncyCastle (échange de clés post-quantique ; fonctionne aussi sous Windows 10)");
+        A("Pairing always uses BouncyCastle, because it needs TLS with a pre-shared key. BouncyCastle offers hybrid post-quantum key exchange (ML-KEM) first; Windows uses it only if its own TLS has been updated for it.", "L'appairage utilise toujours BouncyCastle, car il nécessite TLS avec une clé pré-partagée. BouncyCastle propose en priorité l'échange de clés hybride post-quantique (ML-KEM) ; Windows ne l'utilise que si son propre TLS a été mis à jour en conséquence.");
+        A("Key exchange: {0}", "Échange de clés : {0}");
+        A("not reported by the Windows TLS engine", "non communiqué par le moteur TLS de Windows");
+        A("hybrid post-quantum", "hybride post-quantique");
+        A("classical", "classique");
         A("Test the selected engine", "Tester le moteur choisi");
         A("TLS engine self-test", "Autotest du moteur TLS");
         A("The TLS 1.3 built into Windows 11.", "Le TLS 1.3 intégré à Windows 11.");
@@ -149,8 +154,8 @@ internal static partial class French
         A("In the ACU Simulator, click \"Add reader…\" and give this computer's address, the pairing port and the setup code (or paste the QR text). Watch the activity: pake_params and pake_share (SPAKE2+), then TLS with the shared key, then attest_request, enroll and cert_install.",
           "Dans le simulateur d'ACU, cliquez sur « Ajouter un lecteur… » et indiquez l'adresse de cet ordinateur, le port d'appairage et le code d'appairage (ou collez le texte du QR). Observez l'activité : pake_params et pake_share (SPAKE2+), puis TLS avec la clé partagée, puis attest_request, enroll et cert_install.");
         A("Reader connects to the ACU", "Le lecteur se connecte à l'ACU");
-        A("Once it has a site certificate the reader dials the ACU (port 7500) over TLS 1.3 with mutual certificates, and sends hello with a fresh 32-byte session value. Every grant for this session must include that value.",
-          "Une fois muni d'un certificat de site, le lecteur appelle l'ACU (port 7500) sur TLS 1.3 avec authentification mutuelle par certificats, et envoie hello avec une nouvelle valeur de session de 32 octets. Toute autorisation pour cette session doit inclure cette valeur.");
+        A("Once it has a site certificate the reader dials the ACU (port 7500) over TLS 1.3 with mutual certificates, and sends hello with a fresh 32-byte session value. Every grant for this session must include that value. The Connection panel shows the key exchange: SecP256r1MLKEM768 is hybrid post-quantum, so a recording of this session stays private even from a future quantum computer.",
+          "Une fois muni d'un certificat de site, le lecteur appelle l'ACU (port 7500) sur TLS 1.3 avec authentification mutuelle par certificats, et envoie hello avec une nouvelle valeur de session de 32 octets. Toute autorisation pour cette session doit inclure cette valeur. Le panneau Connexion indique l'échange de clés : SecP256r1MLKEM768 est hybride post-quantique, de sorte qu'un enregistrement de cette session reste confidentiel même face à un futur ordinateur quantique.");
         A("Receive the trust list", "Recevoir la liste de confiance");
         A("The ACU sends trust_update with the grant signer's certificate. From now on the reader opens its door only for grants signed by that key, for this reader, for this session, with a counter it has not seen before.",
           "L'ACU envoie trust_update avec le certificat du signataire des autorisations. Désormais, le lecteur n'ouvre sa porte que pour des autorisations signées par cette clé, destinées à ce lecteur et à cette session, avec un compteur qu'il n'a encore jamais vu.");

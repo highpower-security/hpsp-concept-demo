@@ -217,7 +217,7 @@ public sealed class MainForm : Form
         new ChecklistStep
         {
             Title = "Reader connects to the ACU",
-            Explain = "Once it has a site certificate the reader dials the ACU (port 7500) over TLS 1.3 with mutual certificates, and sends hello with a fresh 32-byte session value. Every grant for this session must include that value.",
+            Explain = "Once it has a site certificate the reader dials the ACU (port 7500) over TLS 1.3 with mutual certificates, and sends hello with a fresh 32-byte session value. Every grant for this session must include that value. The Connection panel shows the key exchange: SecP256r1MLKEM768 is hybrid post-quantum, so a recording of this session stays private even from a future quantum computer.",
             IsDone = () => _engine.Connected,
         },
         new ChecklistStep
@@ -339,6 +339,7 @@ public sealed class MainForm : Form
         {
             L.F("Status: {0}", e.ConnectionStatus),
             e.Tls is { } t ? L.F("TLS: {0}, {1}", t.Protocol, t.Cipher) : null,
+            e.Tls is { } t2 ? L.F("Key exchange: {0}", t2.KeyExchange ?? L.T("not reported by the Windows TLS engine")) : null,
             e.SessionNonce is { } n ? L.F("Session value: {0}", MessageSummary.Short(n)) : null,
             e.IsPaired ? L.F("Trust list: epoch {0}, {1} grant signer(s)", e.TrustEpoch, e.SignerCount) : null,
             L.F("Events waiting for acknowledgement: {0}", e.PendingEventCount),

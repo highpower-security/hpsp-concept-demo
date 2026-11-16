@@ -94,9 +94,9 @@ public sealed class TlsEnginePicker : GroupBox
     {
         Text = L.T("TLS engine for sessions");
         _win.Text = L.T("Windows built-in (SChannel)");
-        _bc.Text = L.T("BouncyCastle (works on Windows 10 too)");
+        _bc.Text = L.T("BouncyCastle (post-quantum key exchange; works on Windows 10 too)");
         _test.Text = L.T("Test the selected engine");
-        _note.Text = _winOk ? L.T("Pairing always uses BouncyCastle, because it needs TLS with a pre-shared key.")
+        _note.Text = _winOk ? L.T("Pairing always uses BouncyCastle, because it needs TLS with a pre-shared key. BouncyCastle offers hybrid post-quantum key exchange (ML-KEM) first; Windows uses it only if its own TLS has been updated for it.")
                             : L.T("Windows built-in TLS is not available here: this version of Windows has no TLS 1.3. BouncyCastle is used instead.");
         _tip.SetToolTip(_win, _winOk ? L.T("The TLS 1.3 built into Windows 11.") : _winWhy);
     }
