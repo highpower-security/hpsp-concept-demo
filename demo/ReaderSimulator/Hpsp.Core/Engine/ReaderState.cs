@@ -76,7 +76,7 @@ public sealed class ReaderState
     }
 }
 
-/// <summary>An event waiting for acknowledgement, kept as the exact CBOR that was (or will be) sent.</summary>
+/// <summary>An event waiting for acknowledgment, kept as the exact CBOR that was (or will be) sent.</summary>
 public sealed class StoredEvent
 {
     public long Seq { get; set; }

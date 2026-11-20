@@ -110,13 +110,13 @@ public sealed class ActivityView : UserControl
         string arrow = e.Kind switch { ActivityKind.Sent => "→", ActivityKind.Received => "←", ActivityKind.Refused => "✖", ActivityKind.Good => "✔", ActivityKind.Warning => "!", ActivityKind.Error => "✖", _ => "·" };
         string summary = e.Summary.StartsWith("-> ") || e.Summary.StartsWith("<- ") ? e.Summary[3..] : e.Summary;
         var item = new ListViewItem(new[] { e.Time.ToString("HH:mm:ss.f"), arrow, e.Channel, e.Peer ?? "", summary });
-        item.ForeColor = Colour(e.Kind);
+        item.ForeColor = KindColor(e.Kind);
         if (e.Kind is ActivityKind.Refused or ActivityKind.Error) item.BackColor = Color.FromArgb(255, 235, 235);
         else if (e.Kind == ActivityKind.Good) item.BackColor = Color.FromArgb(232, 248, 232);
         return item;
     }
 
-    public static Color Colour(ActivityKind k) => k switch
+    public static Color KindColor(ActivityKind k) => k switch
     {
         ActivityKind.Sent => Color.FromArgb(20, 70, 160),
         ActivityKind.Received => Color.FromArgb(90, 40, 140),

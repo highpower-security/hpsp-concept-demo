@@ -9,7 +9,7 @@
 //
 //  IN PLAIN TERMS
 //  --------------
-//  Every HPSP message is a small labelled package:
+//  Every HPSP message is a small labeled package:
 //
 //      type   what kind of message: cmd, rsp, err, evt, ack, frag or pake
 //      op     what it is about, for example "unlock" or "credential"

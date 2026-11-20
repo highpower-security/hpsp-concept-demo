@@ -167,7 +167,7 @@ internal static partial class French
         A("{0}: door {1}.", "{0} : porte {1}.");
         A("{0} refused {1}: {2}", "{0} a refusé {1} : {2}");
         A("SECURITY EVENT from {0}: {1} {2}", "ÉVÉNEMENT DE SÉCURITÉ de {0} : {1} {2}");
-        A("{0}: card format not recognised.", "{0} : format de carte non reconnu.");
+        A("{0}: card format not recognized.", "{0} : format de carte non reconnu.");
         A("{0}: card FC {1} / {2} is {3:0.#} s old. Logged only; no door opened (limit {4} s).", "{0} : la lecture de la carte FC {1} / {2} date de {3:0.#} s. Journalisée seulement ; aucune porte ouverte (limite {4} s).");
         A("unknown card", "carte inconnue");
         A("not in the access list", "absente de la liste d'accès");

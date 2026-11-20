@@ -121,10 +121,10 @@ public sealed class MainForm : Form
 
         var topSplit = new SplitContainer { Dock = DockStyle.Fill, Orientation = Orientation.Horizontal };
         topSplit.Panel1.Controls.Add(readersPanel); topSplit.Panel2.Controls.Add(accessPanel);
-        var centre = new SplitContainer { Dock = DockStyle.Fill, Orientation = Orientation.Horizontal };
-        centre.Panel1.Controls.Add(topSplit); centre.Panel2.Controls.Add(_activity);
+        var center = new SplitContainer { Dock = DockStyle.Fill, Orientation = Orientation.Horizontal };
+        center.Panel1.Controls.Add(topSplit); center.Panel2.Controls.Add(_activity);
         var right = new SplitContainer { Dock = DockStyle.Fill, FixedPanel = FixedPanel.Panel2 };
-        right.Panel1.Controls.Add(centre); right.Panel2.Controls.Add(_checklist);
+        right.Panel1.Controls.Add(center); right.Panel2.Controls.Add(_checklist);
         var main = new SplitContainer { Dock = DockStyle.Fill, FixedPanel = FixedPanel.Panel1 };
         main.Panel1.Controls.Add(left); main.Panel2.Controls.Add(right);
         Controls.Add(main); Controls.Add(_banner); Controls.Add(_status); Controls.Add(_menu);
@@ -134,7 +134,7 @@ public sealed class MainForm : Form
             main.SplitterDistance = 385;
             right.SplitterDistance = Math.Max(400, right.Width - 330);
             right.Panel2Collapsed = !_settings.ChecklistVisible;
-            centre.SplitterDistance = (int)(centre.Height * 0.48);
+            center.SplitterDistance = (int)(center.Height * 0.48);
             topSplit.SplitterDistance = (int)(topSplit.Height * 0.45);
         };
 
@@ -174,7 +174,7 @@ public sealed class MainForm : Form
         _bViewSecrets.Click += (_, _) => ViewSecrets();
         _mFolder.Click += (_, _) => { try { System.Diagnostics.Process.Start("explorer.exe", _folder); } catch { } };
         _mExit.Click += (_, _) => Close();
-        _mAbout.Click += (_, _) => MessageBox.Show(this, L.T("HPSP ACU Simulator, version 0.6.0 (demo).\n\nA teaching demo of the High Performance Security Protocol: a simulated access control unit that pairs readers, keeps an access list, and sends signed grants to open doors over TLS 1.3.\n\nCopyright (c) 2026 Highpower Security Products LLC. Apache License 2.0.\nUses BouncyCastle (MIT licence)."), Text);
+        _mAbout.Click += (_, _) => MessageBox.Show(this, L.T("HPSP ACU Simulator, version 0.6.0 (demo).\n\nA teaching demo of the High Performance Security Protocol: a simulated access control unit that pairs readers, keeps an access list, and sends signed grants to open doors over TLS 1.3.\n\nCopyright (c) 2026 Highpower Security Products LLC. Apache License 2.0.\nUses BouncyCastle (MIT license)."), Text);
         _bCreate.Click += (_, _) => CreateSite();
         _bListen.Click += (_, _) => { if (_engine.Listening) _engine.Stop(); else _engine.Start(); RefreshState(); };
         _cUnknown.Checked = _engine.Access.AllowUnknownCards;

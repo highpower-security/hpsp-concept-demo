@@ -92,7 +92,7 @@ public sealed class MainForm : Form
         UiHelpers.ApplyLanguage(_settings);
         _engine = new ReaderEngine(folder) { PairingPort = pairingPort, TlsEngine = UiHelpers.InitialEngine(_settings) };
         _tls = new TlsEnginePicker(_engine.TlsEngine);
-        _engine.TlsEngine = _tls.Engine;     // greyed-out Windows choice on Windows 10 falls back to BouncyCastle
+        _engine.TlsEngine = _tls.Engine;     // grayed-out Windows choice on Windows 10 falls back to BouncyCastle
 
         Width = 1400; Height = 900; MinimumSize = new Size(1000, 640); StartPosition = FormStartPosition.CenterScreen;
         Font = new Font("Segoe UI", 9f);
@@ -153,7 +153,7 @@ public sealed class MainForm : Form
         _bViewSecrets.Click += (_, _) => ViewSecrets();
         _mFolder.Click += (_, _) => { try { System.Diagnostics.Process.Start("explorer.exe", _folder); } catch { } };
         _mExit.Click += (_, _) => Close();
-        _mAbout.Click += (_, _) => MessageBox.Show(this, L.T("HPSP Reader Simulator, version 0.6.0 (demo).\n\nA teaching demo of the High Performance Security Protocol: a simulated card reader that pairs with an ACU, reports 26-bit card swipes over TLS 1.3, and opens its door only for a valid signed grant.\n\nCopyright (c) 2026 Highpower Security Products LLC. Apache License 2.0.\nUses BouncyCastle (MIT licence) and QRCoder (MIT licence)."), Text);
+        _mAbout.Click += (_, _) => MessageBox.Show(this, L.T("HPSP Reader Simulator, version 0.6.0 (demo).\n\nA teaching demo of the High Performance Security Protocol: a simulated card reader that pairs with an ACU, reports 26-bit card swipes over TLS 1.3, and opens its door only for a valid signed grant.\n\nCopyright (c) 2026 Highpower Security Products LLC. Apache License 2.0.\nUses BouncyCastle (MIT license) and QRCoder (MIT license)."), Text);
         _bCopyQr.Click += (_, _) => { Clipboard.SetText(_engine.QrText); _bCopyQr.Text = L.T("Copied"); };
         _bPair.Click += (_, _) => { if (_engine.PairingWindowOpen) _engine.ClosePairingWindow(); else _engine.OpenPairingWindow(); RefreshState(); };
         _bCable.Click += (_, _) =>
@@ -176,7 +176,7 @@ public sealed class MainForm : Form
         };
         _bNew.Click += (_, _) =>
         {
-            if (MessageBox.Show(this, L.T("Make this a brand-new simulated reader: new device ID, new factory identity and new setup code. The current one is forgotten (an ACU that paired it will no longer recognise it).\n\nContinue?"), L.T("New device"), MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK) return;
+            if (MessageBox.Show(this, L.T("Make this a brand-new simulated reader: new device ID, new factory identity and new setup code. The current one is forgotten (an ACU that paired it will no longer recognize it).\n\nContinue?"), L.T("New device"), MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK) return;
             _engine.NewDevice(); ResetChecklistFlags(); RefreshState();
         };
         _tick.Tick += (_, _) => RefreshState();
@@ -342,7 +342,7 @@ public sealed class MainForm : Form
             e.Tls is { } t2 ? L.F("Key exchange: {0}", t2.KeyExchange ?? L.T("not reported by the Windows TLS engine")) : null,
             e.SessionNonce is { } n ? L.F("Session value: {0}", MessageSummary.Short(n)) : null,
             e.IsPaired ? L.F("Trust list: epoch {0}, {1} grant signer(s)", e.TrustEpoch, e.SignerCount) : null,
-            L.F("Events waiting for acknowledgement: {0}", e.PendingEventCount),
+            L.F("Events waiting for acknowledgment: {0}", e.PendingEventCount),
             e.IsPaired ? L.F("Grant counter floor: {0}", e.GrantFloor) : null,
         }.Where(x => x is not null));
         _bCable.Text = e.CablePulled ? L.T("Plug the network cable back in") : L.T("Pull network cable (simulate an outage)");

@@ -39,9 +39,9 @@ internal static partial class French
         // ---- titles and About ----
         A("HPSP Reader Simulator", "Simulateur de lecteur HPSP");
         A("HPSP ACU Simulator", "Simulateur d'ACU HPSP");
-        A("HPSP Reader Simulator, version 0.6.0 (demo).\n\nA teaching demo of the High Performance Security Protocol: a simulated card reader that pairs with an ACU, reports 26-bit card swipes over TLS 1.3, and opens its door only for a valid signed grant.\n\nCopyright (c) 2026 Highpower Security Products LLC. Apache License 2.0.\nUses BouncyCastle (MIT licence) and QRCoder (MIT licence).",
+        A("HPSP Reader Simulator, version 0.6.0 (demo).\n\nA teaching demo of the High Performance Security Protocol: a simulated card reader that pairs with an ACU, reports 26-bit card swipes over TLS 1.3, and opens its door only for a valid signed grant.\n\nCopyright (c) 2026 Highpower Security Products LLC. Apache License 2.0.\nUses BouncyCastle (MIT license) and QRCoder (MIT license).",
           "Simulateur de lecteur HPSP, version 0.6.0 (démo).\n\nUne démonstration pédagogique du protocole HPSP (High Performance Security Protocol) : un lecteur de cartes simulé qui s'appaire avec une ACU, transmet les lectures de cartes 26 bits sur TLS 1.3 et n'ouvre sa porte que sur une autorisation signée valide.\n\nCopyright (c) 2026 Highpower Security Products LLC. Licence Apache 2.0.\nUtilise BouncyCastle (licence MIT) et QRCoder (licence MIT).");
-        A("HPSP ACU Simulator, version 0.6.0 (demo).\n\nA teaching demo of the High Performance Security Protocol: a simulated access control unit that pairs readers, keeps an access list, and sends signed grants to open doors over TLS 1.3.\n\nCopyright (c) 2026 Highpower Security Products LLC. Apache License 2.0.\nUses BouncyCastle (MIT licence).",
+        A("HPSP ACU Simulator, version 0.6.0 (demo).\n\nA teaching demo of the High Performance Security Protocol: a simulated access control unit that pairs readers, keeps an access list, and sends signed grants to open doors over TLS 1.3.\n\nCopyright (c) 2026 Highpower Security Products LLC. Apache License 2.0.\nUses BouncyCastle (MIT license).",
           "Simulateur d'ACU HPSP, version 0.6.0 (démo).\n\nUne démonstration pédagogique du protocole HPSP (High Performance Security Protocol) : une unité de contrôle d'accès simulée qui appaire des lecteurs, tient une liste d'accès et envoie des autorisations signées pour ouvrir les portes sur TLS 1.3.\n\nCopyright (c) 2026 Highpower Security Products LLC. Licence Apache 2.0.\nUtilise BouncyCastle (licence MIT).");
 
         // ---- activity window ----
@@ -111,7 +111,7 @@ internal static partial class French
         A("Status: {0}", "État : {0}");
         A("Session value: {0}", "Valeur de session : {0}");
         A("Trust list: epoch {0}, {1} grant signer(s)", "Liste de confiance : époque {0}, {1} signataire(s) des autorisations");
-        A("Events waiting for acknowledgement: {0}", "Événements en attente d'acquittement : {0}");
+        A("Events waiting for acknowledgment: {0}", "Événements en attente d'acquittement : {0}");
         A("Grant counter floor: {0}", "Plancher du compteur d'autorisations : {0}");
         A("Plug the network cable back in", "Rebrancher le câble réseau");
         A("Pull network cable (simulate an outage)", "Débrancher le câble réseau (simuler une coupure)");
@@ -131,7 +131,7 @@ internal static partial class French
         A("Factory reset removes this reader's site certificate and site settings. It keeps its factory identity and setup code, so it can be paired again.\n\nReset now?", "La réinitialisation d'usine supprime le certificat de site et les réglages de site de ce lecteur. Il conserve son identité d'usine et son code d'appairage, et peut donc être appairé à nouveau.\n\nRéinitialiser maintenant ?");
         A("New device…", "Nouvel appareil…");
         A("New device", "Nouvel appareil");
-        A("Make this a brand-new simulated reader: new device ID, new factory identity and new setup code. The current one is forgotten (an ACU that paired it will no longer recognise it).\n\nContinue?", "Faire de ce lecteur simulé un appareil neuf : nouvel identifiant, nouvelle identité d'usine et nouveau code d'appairage. L'actuel est oublié (une ACU qui l'avait appairé ne le reconnaîtra plus).\n\nContinuer ?");
+        A("Make this a brand-new simulated reader: new device ID, new factory identity and new setup code. The current one is forgotten (an ACU that paired it will no longer recognize it).\n\nContinue?", "Faire de ce lecteur simulé un appareil neuf : nouvel identifiant, nouvelle identité d'usine et nouveau code d'appairage. L'actuel est oublié (une ACU qui l'avait appairé ne le reconnaîtra plus).\n\nContinuer ?");
         A("{0}   ACU {1}", "{0}   ACU {1}");
         A("This reader is already paired: the pairing button is ignored. Use Factory reset to pair it with another site.", "Ce lecteur est déjà appairé : le bouton d'appairage est ignoré. Utilisez la réinitialisation d'usine pour l'appairer à un autre site.");
         A("Pairing stopped after an unexpected error: ", "Appairage arrêté après une erreur inattendue : ");

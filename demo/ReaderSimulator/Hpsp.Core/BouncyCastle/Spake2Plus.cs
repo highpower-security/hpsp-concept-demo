@@ -2,7 +2,7 @@
 // #                                                                           #
 // #   BOUNCYCASTLE CODE - START                                               #
 // #                                                                           #
-// #   This file uses the BouncyCastle cryptography library (MIT licence,      #
+// #   This file uses the BouncyCastle cryptography library (MIT license,      #
 // #   https://www.bouncycastle.org/csharp/) for elliptic-curve point          #
 // #   arithmetic. .NET's built-in ECDsa / ECDiffieHellman classes cannot      #
 // #   multiply arbitrary points, which SPAKE2+ needs (for example w0 * M).    #

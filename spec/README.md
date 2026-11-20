@@ -11,4 +11,4 @@ Test vectors: [`spec_vectors.json`](../c-reference/vectors/spec_vectors.json) (0
 
 Open items and placeholders (for example the certificate extension OIDs) are listed in the 0.6 draft's Annex F.
 
-Licence: CC BY 4.0, see [LICENSE.md](LICENSE.md).
+License: CC BY 4.0, see [LICENSE.md](LICENSE.md).

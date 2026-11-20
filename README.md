@@ -30,7 +30,7 @@ Both programs have:
 
 ## What is in the repository
 
-| Folder | Contents | Licence |
+| Folder | Contents | License |
 |---|---|---|
 | [`spec/`](spec/) | The HPSP 0.6 implementation draft (PDF and Word), which adds post-quantum cryptography, and the earlier 0.5 and 0.4 drafts. | CC BY 4.0 |
 | [`c-reference/`](c-reference/) | A portable, allocation-free C99 implementation of the device side of the protocol core, a controller simulator, and tools that reproduce the specification's test vectors. See its [README](c-reference/README.md). | Apache-2.0 |
@@ -56,7 +56,7 @@ Both programs have:
 - C reference: 53 unit checks (plus 200,000 mutated messages) and 27 scenario checks against the controller simulator.
 - Demo: 130 automated checks, including both TLS engines in every combination, all the specification's examples and test vectors, and the full commissioning-to-unlock flow. The code was reviewed for security; see [SECURITY.md](SECURITY.md).
 
-## Licences
+## Licenses
 
 - Code (`c-reference/`, `demo/`): **Apache License 2.0**, see [LICENSE](LICENSE).
 - Specification documents (`spec/`): **Creative Commons Attribution 4.0** (CC BY 4.0), see [spec/LICENSE.md](spec/LICENSE.md).

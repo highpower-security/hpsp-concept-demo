@@ -2,7 +2,7 @@
 // #                                                                           #
 // #   BOUNCYCASTLE CODE - START                                               #
 // #                                                                           #
-// #   This file uses the BouncyCastle TLS library (MIT licence,               #
+// #   This file uses the BouncyCastle TLS library (MIT license,               #
 // #   https://www.bouncycastle.org/csharp/) because Windows' built-in TLS     #
 // #   cannot run TLS 1.3 with an external pre-shared key, which HPSP          #
 // #   commissioning requires (specification 5.6, step 4).                     #

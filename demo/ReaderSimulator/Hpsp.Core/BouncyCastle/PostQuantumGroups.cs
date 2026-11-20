@@ -10,7 +10,7 @@
 //
 // #############################################################################
 // #   BOUNCYCASTLE CODE - START
-// #   Everything in this file uses the BouncyCastle library (MIT licence).
+// #   Everything in this file uses the BouncyCastle library (MIT license).
 // #############################################################################
 //
 //  IN PLAIN TERMS

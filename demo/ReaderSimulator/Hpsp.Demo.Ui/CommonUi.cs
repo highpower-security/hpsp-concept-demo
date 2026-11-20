@@ -79,7 +79,7 @@ public static class WrappingText
 /// <summary>
 /// Choose which TLS 1.3 code the program uses for normal sessions:
 ///  - "Windows built-in (SChannel)": the TLS that comes with Windows 11. Not on Windows 10,
-///    whose SChannel has no TLS 1.3, so that choice is greyed out there.
+///    whose SChannel has no TLS 1.3, so that choice is grayed out there.
 ///  - "BouncyCastle": a TLS library inside the program. Works on Windows 10 and 11.
 /// Pairing always uses BouncyCastle, because it needs TLS with a pre-shared key.
 /// </summary>

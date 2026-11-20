@@ -366,7 +366,7 @@ public sealed partial class AcuEngine : IDisposable
             if (r is not null && !duplicate) { r.LastAckedSeq = seq; Save(); }
         }
         await ch.SendAsync(HpspMessage.Ack(seq), ct);
-        // An event we have already stored (a resend after a lost acknowledgement) is
+        // An event we have already stored (a resend after a lost acknowledgment) is
         // acknowledged again but never acted on twice (spec 6.2).
         if (duplicate) { Log(ActivityKind.Info, L.F("{0}: event {1} already received; acknowledged again, not acted on.", s.Name, seq), peer: s.Name); return; }
 
@@ -392,7 +392,7 @@ public sealed partial class AcuEngine : IDisposable
         // a convenience). Bits that fail the parity check are a bad read: no access decision.
         int fc, card;
         if (!(m.GetBytes("raw_hex") is byte[] raw && m.GetLong("bits") is long bits && Wiegand26.TryDecode(raw, (int)bits, out fc, out card)))
-        { Log(ActivityKind.Warning, L.F("{0}: card format not recognised.", s.Name), peer: s.Name); return; }
+        { Log(ActivityKind.Warning, L.F("{0}: card format not recognized.", s.Name), peer: s.Name); return; }
         LastCard = (fc, card, s.Name);
 
         // Never act on a stale card read (for example one replayed after a long network outage).

@@ -22,7 +22,7 @@ The ready-made programs are on this repository's **Releases** page. Each build c
 
 To check, open **Settings → System → About** and look at *System type*. "x64-based processor" means the x64 download, and "ARM-based processor" means the Arm64 download. (The x64 version also runs on Arm PCs, more slowly, under emulation. The status bar then says "x64 emulated".)
 
-Supported: **Windows 11** and **Windows 10**. On Windows 10, the "Windows built-in" TLS option is greyed out because Windows 10 has no TLS 1.3. The programs use the BouncyCastle option instead, and it works the same.
+Supported: **Windows 11** and **Windows 10**. On Windows 10, the "Windows built-in" TLS option is grayed out because Windows 10 has no TLS 1.3. The programs use the BouncyCastle option instead, and it works the same.
 
 The BouncyCastle option uses **hybrid post-quantum key exchange** (SecP256r1MLKEM768, from HPSP 0.6). The reader's Connection panel and the ACU's TLS column show which key exchange each session used. Windows' own TLS uses it only when Windows has been updated for it; otherwise it uses classical secp256r1.
 

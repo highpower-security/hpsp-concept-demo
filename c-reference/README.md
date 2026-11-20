@@ -17,7 +17,7 @@ specification.
 | CBOR | `src/hpsp_cbor.[ch]` | Reader and writer for the HPSP CBOR profile: definite lengths, no tags, no null, text keys, depth ≤ 6, ≤ 24 members, no duplicate keys, valid UTF-8. |
 | SHA-256 | `src/hpsp_sha256.[ch]` | FIPS 180-4. |
 | Grant check | `src/hpsp_grant.[ch]` | The 84-byte grant layout v2 and the device's checks in the order the spec gives: signer, counter and boot floor, expiry, signature. ECDSA P-256 by [p256-m](https://github.com/mpg/p256-m) (Apache-2.0), vendored in `third_party/`. |
-| Device core | `src/hpsp_device.[ch]` | Framing, fragments, the envelope, `hello`, heartbeats with `mono_now`, reliable events with acknowledgement and replay, `unlock` / `lock` / `get_caps` / `goodbye`, timed and latched unlocks, `link_loss_grace_s`. |
+| Device core | `src/hpsp_device.[ch]` | Framing, fragments, the envelope, `hello`, heartbeats with `mono_now`, reliable events with acknowledgment and replay, `unlock` / `lock` / `get_caps` / `goodbye`, timed and latched unlocks, `link_loss_grace_s`. |
 | Porting layer | `hpsp_port` in `src/hpsp_device.h` | Seven functions: send, close, monotonic time, random bytes, non-volatile write, drive an output, log. |
 | POSIX test device | `posix/device_main.c` | Runs the core over TCP and simulates one card read. |
 | Controller simulator | `tools/sim_controller.py` | Signs grants with the test key and runs 27 scenario checks against the device. |
@@ -55,7 +55,7 @@ document, not against itself.
   latched unlock secured on session loss, and that every device message is
   deterministic CBOR within `max_msg`.
 * A libFuzzer run of 3 minutes (about 25 million inputs, seeded with the spec's
-  examples) found no crash, leak or undefined behaviour.
+  examples) found no crash, leak or undefined behavior.
 * The SPAKE2+ code reproduces RFC 9383's test vector exactly, then the HPSP
   commissioning vector in Annex E.
 
@@ -87,7 +87,7 @@ about 1.1 KB. TLS, the IP stack and the application are not included.
   recovery, inputs, indicators, the OSDP gateway and the card relay.
 * **Timing on a real processor.** Measure it on the target.
 
-## Licence
+## License
 
 To be decided by Highpower Security Products LLC (the specification suggests
 Apache-2.0 for the reference implementation). `third_party/p256-m` is

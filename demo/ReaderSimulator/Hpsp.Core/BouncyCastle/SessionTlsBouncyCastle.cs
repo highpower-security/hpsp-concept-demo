@@ -2,7 +2,7 @@
 // #                                                                           #
 // #   BOUNCYCASTLE CODE - START                                               #
 // #                                                                           #
-// #   This file uses the BouncyCastle TLS library (MIT licence,               #
+// #   This file uses the BouncyCastle TLS library (MIT license,               #
 // #   https://www.bouncycastle.org/csharp/) to run the normal reader-to-ACU   #
 // #   session with certificates. It is the "BouncyCastle" choice of the       #
 // #   TLS engine setting, for Windows 10 (whose own TLS has no TLS 1.3) and   #
@@ -297,7 +297,7 @@ public static class SessionTlsBouncyCastle
 
         // The base Stream class runs ReadAsync and WriteAsync through ONE shared lock, so a
         // pending read would hold up every write. Running them separately avoids that.
-        // (Cancelling does not interrupt a read that is already waiting; to stop one, dispose
+        // (Canceling does not interrupt a read that is already waiting; to stop one, dispose
         // the stream, which closes the socket. The engines always do that.)
         public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken ct) =>
             Task.Run(() => Read(buffer, offset, count), ct);

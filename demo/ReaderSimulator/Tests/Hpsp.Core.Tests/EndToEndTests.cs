@@ -209,7 +209,7 @@ public static class EndToEndTests
             reader.PlugCable();
             check(await Until(() => acu.PairedReaders.First(p => p.DeviceId == reader.DeviceId).LastAckedSeq > seqBefore, 15000),
                 "reconnected: the offline swipe is replayed and acknowledged");
-            check(await Until(() => reader.PendingEventCount == 0), "reader's event queue empties after acknowledgement");
+            check(await Until(() => reader.PendingEventCount == 0), "reader's event queue empties after acknowledgment");
 
             // ---- the old-session attack now uses a genuinely previous session value ----
             await Until(() => acu.Sessions.Any(s => s.DeviceId == reader.DeviceId && s.HelloDone));
