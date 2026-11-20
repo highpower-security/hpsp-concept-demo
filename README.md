@@ -52,9 +52,9 @@ Both programs have:
 
 ## Status
 
-- Specification: **0.5 implementation draft**. Open items are listed in its annexes, and certificate extension OIDs are placeholders.
-- C reference: 53 unit checks (plus 200,000 mutated messages) and 27 scenario checks against the controller simulator.
-- Demo: 130 automated checks, including both TLS engines in every combination, all the specification's examples and test vectors, and the full commissioning-to-unlock flow. The code was reviewed for security; see [SECURITY.md](SECURITY.md).
+- Specification: **0.6 implementation draft** (November 2026). It adds post-quantum cryptography to 0.5: hybrid ML-KEM key exchange, version 3 grants with ML-DSA, an AES-256 option and a transitional CNSA 2.0 profile. Open items are listed in its Annex F, and certificate extension OIDs are placeholders.
+- Demo: **version 0.6.0**. It uses the 0.6 hybrid key exchange (SecP256r1MLKEM768) with the BouncyCastle engine; its grants are still algorithm 1 (ECDSA P-256), which 0.6 keeps. 133 automated checks, including both TLS engines in every combination, all the specification's examples and test vectors, and the full commissioning-to-unlock flow. The code was reviewed for security; see [SECURITY.md](SECURITY.md).
+- C reference: implements 0.5, which 0.6 keeps as its classical profile; 53 unit checks (plus 200,000 mutated messages) and 27 scenario checks against the controller simulator. The 0.6 post-quantum grant vectors are in [`c-reference/vectors/spec_vectors_pq.json`](c-reference/vectors/spec_vectors_pq.json).
 
 ## Licenses
 
