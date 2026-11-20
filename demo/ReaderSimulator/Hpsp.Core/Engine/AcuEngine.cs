@@ -486,6 +486,27 @@ public sealed partial class AcuEngine : IDisposable
         Changed();
     }
 
+    /// <summary>
+    /// Put the ACU back to how it was before first use: no site, no keys, no paired readers and an empty
+    /// access list. (The window's language and TLS-engine choices are kept; they are not ACU state.)
+    /// </summary>
+    public void FactoryReset()
+    {
+        Stop();                                  // closes every reader session and the listener
+        lock (_lock)
+        {
+            _state = new AcuState();
+            _cRoot = _cAcu = _cSigner = default;
+            Access = new AccessList();
+            _lastNonces.Clear();
+            LastCard = null;
+            Save();
+            Access.Save(_accessPath);
+        }
+        Log(ActivityKind.Warning, L.T("Factory reset: the site, all keys, paired readers and the access list were removed. Create a demo site to start again."));
+        Changed();
+    }
+
     public void SaveAccessList() { Access.Save(_accessPath); Changed(); }
 
     private void Drop(ReaderSession s)

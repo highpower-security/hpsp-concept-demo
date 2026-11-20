@@ -128,6 +128,7 @@ internal static partial class French
         A("Device", "Appareil");
         A("Factory reset…", "Réinitialisation d'usine…");
         A("Factory reset", "Réinitialisation d'usine");
+        A("Factory reset removes this ACU's site and all its keys, every paired reader and the whole access list. Readers that were paired with it must be factory-reset and paired again.\n\nReset now?", "La réinitialisation d'usine supprime le site de cet ACU et toutes ses clés, tous les lecteurs appairés et toute la liste d'accès. Les lecteurs qui lui étaient appairés devront être réinitialisés puis appairés à nouveau.\n\nRéinitialiser maintenant ?");
         A("Factory reset removes this reader's site certificate and site settings. It keeps its factory identity and setup code, so it can be paired again.\n\nReset now?", "La réinitialisation d'usine supprime le certificat de site et les réglages de site de ce lecteur. Il conserve son identité d'usine et son code d'appairage, et peut donc être appairé à nouveau.\n\nRéinitialiser maintenant ?");
         A("New device…", "Nouvel appareil…");
         A("New device", "Nouvel appareil");

@@ -49,10 +49,6 @@ public static class L
     /// <summary>English text used while the app ran that has no French entry (for translators).</summary>
     public static readonly ConcurrentDictionary<string, byte> Missing = new();
 
-    /// <summary>The language Windows is set to: French if it is any French, otherwise English.</summary>
-    public static Language FromSystem() =>
-        CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "fr" ? Language.French : Language.English;
-
     public static string Code(Language l) => l == Language.French ? "fr" : "en";
     public static Language FromCode(string? code) => code == "fr" ? Language.French : Language.English;
 

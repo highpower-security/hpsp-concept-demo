@@ -47,7 +47,7 @@ public sealed class MainForm : Form
 
     // ---- site ----
     private readonly GroupBox _gSite; private readonly Label _lSite = UiHelpers.Value(9.5f, true), _lSiteInfo = UiHelpers.Value();
-    private readonly Button _bCreate = new() { AutoSize = true }, _bListen = new() { AutoSize = true, Font = new Font("Segoe UI", 9.5f, FontStyle.Bold) };
+    private readonly Button _bCreate = new() { AutoSize = true }, _bReset = new() { AutoSize = true }, _bListen = new() { AutoSize = true, Font = new Font("Segoe UI", 9.5f, FontStyle.Bold) };
 
     // ---- access rules ----
     private readonly GroupBox _gRules; private readonly CheckBox _cUnknown = WrappingText.Apply(new CheckBox());
@@ -91,7 +91,7 @@ public sealed class MainForm : Form
 
         // ---- left column ----
         (_gSite, var fSite) = UiHelpers.Group();
-        fSite.Controls.AddRange(new Control[] { _lSite, _lSiteInfo, _bCreate, _bListen });
+        fSite.Controls.AddRange(new Control[] { _lSite, _lSiteInfo, _bCreate, _bListen, _bReset });
         (_gRules, var fRules) = UiHelpers.Group();
         fRules.Controls.AddRange(new Control[] { _cUnknown, UiHelpers.Row(_lUnlock, _nUnlock) });
         (_gDev, var fDev) = UiHelpers.Group();
@@ -176,6 +176,7 @@ public sealed class MainForm : Form
         _mExit.Click += (_, _) => Close();
         _mAbout.Click += (_, _) => MessageBox.Show(this, L.T("HPSP ACU Simulator, version 0.6.0 (demo).\n\nA teaching demo of the High Performance Security Protocol: a simulated access control unit that pairs readers, keeps an access list, and sends signed grants to open doors over TLS 1.3.\n\nCopyright (c) 2026 Highpower Security Products LLC. Apache License 2.0.\nUses BouncyCastle (MIT license)."), Text);
         _bCreate.Click += (_, _) => CreateSite();
+        _bReset.Click += (_, _) => FactoryReset();
         _bListen.Click += (_, _) => { if (_engine.Listening) _engine.Stop(); else _engine.Start(); RefreshState(); };
         _cUnknown.Checked = _engine.Access.AllowUnknownCards;
         _cUnknown.CheckedChanged += (_, _) => { _engine.Access.AllowUnknownCards = _cUnknown.Checked; _engine.SaveAccessList(); };
@@ -279,6 +280,21 @@ public sealed class MainForm : Form
         RefreshState();
     }
 
+    private void FactoryReset()
+    {
+        if (MessageBox.Show(this, L.T("Factory reset removes this ACU's site and all its keys, every paired reader and the whole access list. Readers that were paired with it must be factory-reset and paired again.\n\nReset now?"), L.T("Factory reset"), MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK) return;
+        _engine.FactoryReset();
+        // The engine now holds a fresh access list: show it, and keep saving changes to it.
+        _rows = new BindingList<AccessEntry>(_engine.Access.Entries);
+        _grid.DataSource = _rows;
+        _rows.ListChanged += (_, _) => _engine.SaveAccessList();
+        _cUnknown.Checked = _engine.Access.AllowUnknownCards;
+        _nUnlock.Value = Math.Clamp(_engine.Access.UnlockMs / 1000m, _nUnlock.Minimum, _nUnlock.Maximum);
+        _sawGranted = _sawDenied = _attackSent = false;
+        _readersSig = "";
+        RefreshState();
+    }
+
     private void RemoveReader()
     {
         if (_readers.SelectedItems.Count == 0 || _readers.SelectedItems[0].Tag is not Guid id) return;
@@ -367,7 +383,7 @@ public sealed class MainForm : Form
         _mFile.Text = L.T("&File"); _mShowSecrets.Text = L.T("Show secrets (keys, pairing values) in this window - demo only"); _mViewSecrets.Text = L.T("View the ACU's secrets…");
         _mFolder.Text = L.T("Open the data folder"); _mExit.Text = L.T("E&xit");
         _mView.Text = L.T("&View"); _mChecklist.Text = L.T("Provisioning checklist"); _mHelp.Text = L.T("&Help"); _mAbout.Text = L.T("About");
-        _gSite.Text = L.T("Site"); _bCreate.Text = L.T("Create demo site…");
+        _gSite.Text = L.T("Site"); _bCreate.Text = L.T("Create demo site…"); _bReset.Text = L.T("Factory reset…");
         _gRules.Text = L.T("Access rules"); _cUnknown.Text = L.T("Allow cards that are not in the access list"); _lUnlock.Text = L.T("Unlock time (seconds):");
         _gDev.Text = L.T("Demo settings"); _cSecrets.Text = L.T("Show secrets (keys, pairing values) in this window - demo only"); _bViewSecrets.Text = L.T("View secrets…");
         _cUnknownMfr.Text = L.T("Accept readers from any manufacturer (demo; a real site checks a trusted list)");

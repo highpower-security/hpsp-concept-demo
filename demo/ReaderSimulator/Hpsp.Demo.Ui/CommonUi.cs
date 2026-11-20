@@ -162,8 +162,9 @@ public static class UiHelpers
         return i >= 0 && i + 1 < args.Length && int.TryParse(args[i + 1], out var v) ? v : null;
     }
 
-    public static void ApplyLanguage(UiSettings s) =>
-        L.Current = s.Language.Length > 0 ? L.FromCode(s.Language) : L.FromSystem();
+    /// <summary>English unless the person has chosen French from the Language menu (the choice is saved).
+    /// The computer's own language is deliberately not used: the demo always starts in English.</summary>
+    public static void ApplyLanguage(UiSettings s) => L.Current = L.FromCode(s.Language);
 
     public static TlsEngineKind InitialEngine(UiSettings s) =>
         Enum.TryParse<TlsEngineKind>(s.TlsEngine, out var k) ? k

@@ -82,6 +82,7 @@ internal static partial class French
 
         // ---- reader: device and secrets ----
         A("A new simulated device was created: new device ID, factory identity and setup code.", "Un nouvel appareil simulé a été créé : nouvel identifiant, nouvelle identité d'usine et nouveau code d'appairage.");
+        A("Factory reset: the site, all keys, paired readers and the access list were removed. Create a demo site to start again.", "Réinitialisation d'usine : le site, toutes les clés, les lecteurs appairés et la liste d'accès ont été supprimés. Créez un site de démonstration pour recommencer.");
         A("Factory reset: site removed. The reader is unpaired and keeps its factory identity and setup code.", "Réinitialisation d'usine : site supprimé. Le lecteur n'est plus appairé et conserve son identité d'usine et son code d'appairage.");
         A("Setup code: {0}", "Code d'appairage : {0}");
         A("Verifier w0: {0}", "Vérificateur w0 : {0}");

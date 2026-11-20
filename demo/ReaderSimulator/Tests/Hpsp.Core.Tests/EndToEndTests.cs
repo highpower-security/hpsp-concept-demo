@@ -36,6 +36,57 @@ public static class EndToEndTests
         foreach (var kind in new[] { TlsEngineKind.Windows, TlsEngineKind.BouncyCastle })
             await RunOne(kind, check);
         await LockoutRecovery(check);
+        FactoryResets(check);
+        DefaultLanguage(check);
+    }
+
+    /// <summary>The ACU and the reader can each be put back to a factory state, and stay that way after a restart.</summary>
+    static void FactoryResets(Action<bool, string> check)
+    {
+        Console.WriteLine("== Factory reset: ACU and reader ==");
+        string root = Path.Combine(Path.GetTempPath(), "hpsp-reset-" + Guid.NewGuid().ToString("N")[..8]);
+        try
+        {
+            using (var acu = new AcuEngine(Path.Combine(root, "acu")))
+            {
+                acu.CreateSite("Reset Site", new[] { "localhost" }, "localhost", FreePort());
+                acu.Access.Entries.Add(new AccessEntry { Facility = 1, Card = 2, Name = "Alice", Allowed = true });
+                acu.Access.AllowUnknownCards = true; acu.Access.UnlockMs = 1500;
+                acu.SaveAccessList();
+                check(acu.HasSite && acu.Access.Entries.Count == 1, "ACU has a site and an access entry before the reset");
+                acu.FactoryReset();
+                check(!acu.HasSite && acu.SiteId is null && acu.SiteRoot is null && acu.SignerCertificate is null, "ACU factory reset removes the site and its keys");
+                check(acu.PairedReaders.Count == 0 && acu.Access.Entries.Count == 0 && !acu.Access.AllowUnknownCards && acu.Access.UnlockMs == 5000, "ACU factory reset removes readers and the access list and restores its rules");
+                acu.CreateSite("Again", new[] { "localhost" }, "localhost", FreePort());
+                check(acu.HasSite, "ACU can create a new site after a factory reset");
+                acu.FactoryReset();
+            }
+            using (var again = new AcuEngine(Path.Combine(root, "acu")))
+                check(!again.HasSite && again.Access.Entries.Count == 0, "ACU factory reset is saved: it is still blank after a restart");
+
+            var rdr = new ReaderEngine(Path.Combine(root, "reader"));
+            var id = rdr.DeviceId;
+            rdr.FactoryReset();
+            check(!rdr.IsPaired && rdr.DeviceId == id, "reader factory reset unpairs it and keeps its factory identity");
+            rdr.Dispose();
+        }
+        finally { try { Directory.Delete(root, true); } catch { } }
+    }
+
+    /// <summary>A new install, or one that never chose a language, starts in English whatever the computer's language is.</summary>
+    static void DefaultLanguage(Action<bool, string> check)
+    {
+        Console.WriteLine("== Default language ==");
+        var prev = Hpsp.Core.Localization.L.Current;
+        var prevUi = System.Globalization.CultureInfo.CurrentUICulture;
+        try
+        {
+            System.Globalization.CultureInfo.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("fr-FR");
+            // UiHelpers.ApplyLanguage(settings) is L.FromCode(settings.Language): nothing saved ("") means English.
+            check(Hpsp.Core.Localization.L.FromCode("") == Hpsp.Core.Localization.Language.English, "no saved language: English, even on a French computer");
+            check(Hpsp.Core.Localization.L.FromCode("fr") == Hpsp.Core.Localization.Language.French, "a saved choice of French is kept");
+        }
+        finally { System.Globalization.CultureInfo.CurrentUICulture = prevUi; Hpsp.Core.Localization.L.Current = prev; }
     }
 
     /// <summary>One guess, then walk away after seeing confirm_v (as an attacker testing codes would).</summary>
