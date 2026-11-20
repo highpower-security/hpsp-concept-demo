@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="672" viewBox="0 0 760 672" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" role="img">
+<title>SPAKE2+ in HPSP: four messages, then TLS</title>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#73726c"/></marker></defs>
+<rect width="760" height="672" fill="#FFFFFF"/>
+<text x="24" y="30" font-size="15" font-weight="600" fill="#2C2C2A">Four messages turn the setup code into a shared key</text>
+<line x1="170" x2="170" y1="108" y2="170" stroke="#B4B2A9" stroke-width="1.25" stroke-dasharray="5 4"/>
+<line x1="170" x2="170" y1="226" y2="394" stroke="#B4B2A9" stroke-width="1.25" stroke-dasharray="5 4"/>
+<line x1="170" x2="170" y1="450" y2="592" stroke="#B4B2A9" stroke-width="1.25" stroke-dasharray="5 4"/>
+<line x1="590" x2="590" y1="108" y2="282" stroke="#B4B2A9" stroke-width="1.25" stroke-dasharray="5 4"/>
+<line x1="590" x2="590" y1="338" y2="506" stroke="#B4B2A9" stroke-width="1.25" stroke-dasharray="5 4"/>
+<line x1="590" x2="590" y1="562" y2="592" stroke="#B4B2A9" stroke-width="1.25" stroke-dasharray="5 4"/>
+<rect x="52.0" y="52" width="236" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="1.25"/>
+<text x="170" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#0C447C">ACU (Prover)</text>
+<text x="170" y="92" text-anchor="middle" font-size="11.5" fill="#185FA5">Installer enters the code</text>
+<rect x="472.0" y="52" width="236" height="56" rx="8" fill="#FAECE7" stroke="#D85A30" stroke-width="1.25"/>
+<text x="590" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#712B13">Reader (Verifier)</text>
+<text x="590" y="92" text-anchor="middle" font-size="11.5" fill="#993C1D">Holds w0, L and salt from the factory</text>
+<line x1="590" x2="170" y1="146" y2="146" stroke="#73726c" stroke-width="1.25" marker-end="url(#a)"/>
+<text x="380" y="138" text-anchor="middle" font-size="11.5" fill="#2C2C2A">1. pake_params: salt, iteration count</text>
+<rect x="52.0" y="170" width="236" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="1.25"/>
+<text x="170" y="192" text-anchor="middle" font-size="13" font-weight="600" fill="#0C447C">Stretch code into w0, w1</text>
+<text x="170" y="210" text-anchor="middle" font-size="11.5" fill="#185FA5">Pick x; shareP = x·P + w0·M</text>
+<line x1="170" x2="590" y1="254" y2="254" stroke="#73726c" stroke-width="1.25" marker-end="url(#a)"/>
+<text x="380" y="246" text-anchor="middle" font-size="11.5" fill="#2C2C2A">2. pake_share: shareP</text>
+<rect x="472.0" y="282" width="236" height="56" rx="8" fill="#FAECE7" stroke="#D85A30" stroke-width="1.25"/>
+<text x="590" y="304" text-anchor="middle" font-size="13" font-weight="600" fill="#712B13">Pick y; shareV = y·P + w0·N</text>
+<text x="590" y="322" text-anchor="middle" font-size="11.5" fill="#993C1D">Compute Z, V and keys; make confirmV</text>
+<line x1="590" x2="170" y1="366" y2="366" stroke="#73726c" stroke-width="1.25" marker-end="url(#a)"/>
+<text x="380" y="358" text-anchor="middle" font-size="11.5" fill="#2C2C2A">3. pake_share: shareV, confirmV</text>
+<rect x="52.0" y="394" width="236" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="1.25"/>
+<text x="170" y="416" text-anchor="middle" font-size="13" font-weight="600" fill="#0C447C">Compute the same Z, V and keys</text>
+<text x="170" y="434" text-anchor="middle" font-size="11.5" fill="#185FA5">Check confirmV; make confirmP</text>
+<line x1="170" x2="590" y1="478" y2="478" stroke="#73726c" stroke-width="1.25" marker-end="url(#a)"/>
+<text x="380" y="470" text-anchor="middle" font-size="11.5" fill="#2C2C2A">4. pake_confirm: confirmP</text>
+<rect x="472.0" y="506" width="236" height="56" rx="8" fill="#FAECE7" stroke="#D85A30" stroke-width="1.25"/>
+<text x="590" y="528" text-anchor="middle" font-size="13" font-weight="600" fill="#712B13">Check confirmP</text>
+<text x="590" y="546" text-anchor="middle" font-size="11.5" fill="#993C1D">Both now hold K_shared</text>
+<rect x="52.0" y="592" width="656" height="56" rx="8" fill="#F1EFE8" stroke="#888780" stroke-width="1.25"/>
+<text x="380" y="614" text-anchor="middle" font-size="13" font-weight="600" fill="#2C2C2A">TLS 1.3 with a pre-shared key derived from K_shared</text>
+<text x="380" y="632" text-anchor="middle" font-size="11.5" fill="#5F5E5A">Hybrid ML-KEM group; attestation and enrollment run inside</text>
+</svg>

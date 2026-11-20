@@ -36,12 +36,13 @@ Both programs have:
 | [`c-reference/`](c-reference/) | A portable, allocation-free C99 implementation of the device side of the protocol core, a controller simulator, and tools that reproduce the specification's test vectors. See its [README](c-reference/README.md). | Apache-2.0 |
 | [`demo/AcuSimulator/`](demo/AcuSimulator/) | Complete source of the **ACU Simulator** (C#, .NET 8): its window, the protocol library `Hpsp.Core`, shared window pieces and the tests. Builds on its own. | Apache-2.0 |
 | [`demo/ReaderSimulator/`](demo/ReaderSimulator/) | Complete source of the **Reader Simulator**, laid out the same way. The shared parts are identical copies. See [ARCHITECTURE.md](demo/ARCHITECTURE.md). | Apache-2.0 |
+| [`docs/`](docs/) | Explainers: [SPAKE2+ and how HPSP pairs a reader](docs/SPAKE2PLUS.md), and the flowchart below. | CC BY 4.0 |
 
 ## The protocol in one page
 
 ![HPSP flow: set up the ACU, commission the reader, connect over TLS 1.3, then card to door with a signed single-use grant](docs/hpsp-flow.svg)
 
-1. **Commissioning (pairing).** A reader leaves the factory with an identity certificate and a **setup code** printed on its label. At the site, someone presses the reader's pairing button. This proves they are physically present, and it opens a 10-minute window. The ACU and the reader then run **SPAKE2+** with the setup code. Both prove they know it, yet the code never crosses the network, and a wrong guess is counted (5 wrong codes lock pairing). SPAKE2+ yields a shared key, which starts **TLS 1.3** with a pre-shared key. Inside that link:
+1. **Commissioning (pairing).** A reader leaves the factory with an identity certificate and a **setup code** printed on its label. At the site, someone presses the reader's pairing button. This proves they are physically present, and it opens a 10-minute window. The ACU and the reader then run **SPAKE2+** with the setup code. Both prove they know it, yet the code never crosses the network, and a wrong guess is counted (5 wrong codes lock pairing; see [SPAKE2+ explained](docs/SPAKE2PLUS.md)). SPAKE2+ yields a shared key, which starts **TLS 1.3** with a pre-shared key. Inside that link:
    - the reader proves its factory identity, bound to this exact session (`attest_request`);
    - it makes a fresh key pair (`enroll`);
    - it receives a certificate from the site's own root (`cert_install`).
