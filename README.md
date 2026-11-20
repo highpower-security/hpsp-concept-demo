@@ -36,7 +36,7 @@ Both programs have:
 | [`c-reference/`](c-reference/) | A portable, allocation-free C99 implementation of the device side of the protocol core, a controller simulator, and tools that reproduce the specification's test vectors. See its [README](c-reference/README.md). | Apache-2.0 |
 | [`demo/AcuSimulator/`](demo/AcuSimulator/) | Complete source of the **ACU Simulator** (C#, .NET 8): its window, the protocol library `Hpsp.Core`, shared window pieces and the tests. Builds on its own. | Apache-2.0 |
 | [`demo/ReaderSimulator/`](demo/ReaderSimulator/) | Complete source of the **Reader Simulator**, laid out the same way. The shared parts are identical copies. See [ARCHITECTURE.md](demo/ARCHITECTURE.md). | Apache-2.0 |
-| [`docs/`](docs/) | Explainers: [HPSP in pictures](docs/HPSP_IN_PICTURES.md) (trust map, grant checks, OSDP, offline), [SPAKE2+ and how HPSP pairs a reader](docs/SPAKE2PLUS.md), and the flowchart below. | CC BY 4.0 |
+| [`docs/`](docs/) | Explainers: [HPSP in pictures](docs/HPSP_IN_PICTURES.md) (trust map, grant checks, OSDP, offline), [SPAKE2+ and how HPSP pairs a reader](docs/SPAKE2PLUS.md), [microcontroller candidates](docs/MCU_CANDIDATES.md), and the flowchart below. | CC BY 4.0 |
 
 ## The protocol in one page
 
