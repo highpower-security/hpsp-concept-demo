@@ -39,6 +39,8 @@ Both programs have:
 
 ## The protocol in one page
 
+![HPSP flow: set up the ACU, commission the reader, connect over TLS 1.3, then card to door with a signed single-use grant](docs/hpsp-flow.svg)
+
 1. **Commissioning (pairing).** A reader leaves the factory with an identity certificate and a **setup code** printed on its label. At the site, someone presses the reader's pairing button. This proves they are physically present, and it opens a 10-minute window. The ACU and the reader then run **SPAKE2+** with the setup code. Both prove they know it, yet the code never crosses the network, and a wrong guess is counted (5 wrong codes lock pairing). SPAKE2+ yields a shared key, which starts **TLS 1.3** with a pre-shared key. Inside that link:
    - the reader proves its factory identity, bound to this exact session (`attest_request`);
    - it makes a fresh key pair (`enroll`);
